@@ -5,12 +5,12 @@ import 'constants.dart';
 
 late String selectedLocation;
 late String selectedFuelType;
-late String selectedOctaneType;
+late String selectedFuelGrade;
 
 //iOS button pickers
 var locationCupertinoScrollController = FixedExtentScrollController(initialItem: kLocationListIndex);
 var fuelTypeCupertinoScrollController = FixedExtentScrollController(initialItem: kFuelTypeListIndex);
-var petrolCupertinoScrollController = FixedExtentScrollController(initialItem: kPetrolListIndex);
+var petrolCupertinoScrollController = FixedExtentScrollController(initialItem: kFuelGradeListIndex);
 //location ios picker
 Future<void> showLocationActionSheet(BuildContext context) async {
   await showCupertinoModalPopup(
@@ -52,7 +52,7 @@ CupertinoPicker buildLocationCupertinoPicker() {
   );
 }
 
-//fuel button type ios picker
+//fuel type button type ios picker
 Future <void> showFuelTypeActionSheet(BuildContext context) async {
   await showCupertinoModalPopup(
     context: context,
@@ -108,19 +108,34 @@ Future<void> showPetrolTypeActionSheet (BuildContext context) async {
         onPressed: ()=>Navigator.pop(context),
       ),
     ),);
-  kPetrolListIndex;
-  switch(kPetrolListIndex){
-    case 0:
-      selectedOctaneType = '95 LRP';
-      break;
-    case 1:
-      selectedOctaneType = '95 unleaded';
-      break;
-    case 2:
-      selectedOctaneType = '93 unleaded';
-      break;
+
+  if (selectedFuelType == 'petrol'){
+    kFuelGradeListIndex;
+    switch(kFuelGradeListIndex){
+      case 0:
+        selectedFuelGrade = '95 LRP';
+        break;
+      case 1:
+        selectedFuelGrade = '95 unleaded';
+        break;
+      case 2:
+        selectedFuelGrade = '93 unleaded';
+        break;
+    }
+  } else if (selectedFuelType == 'diesel'){
+    kFuelGradeListIndex;
+    switch(kFuelGradeListIndex){
+      case 0:
+        selectedFuelGrade = '50 PPM';
+        break;
+      case 1:
+        selectedFuelGrade = '500 PPM';
+        break;
+    }
+  } else {
+    print('from dropdown_picker => please select a fuel type first');
   }
-  //print('octane is $selectedOctaneType');
+  print('octane is $selectedFuelGrade');
   //print('modal dismissed $selectedOctaneType');
   //getPetrolData(recordIndex: kLocationListIndex);
 }
@@ -132,11 +147,12 @@ CupertinoPicker buildPetrolCupertinoPicker() {
     ),
     itemExtent: 50.0,
     onSelectedItemChanged: (selectedIndex){
-      kPetrolListIndex = selectedIndex;
+      kFuelGradeListIndex = selectedIndex;
       petrolCupertinoScrollController.dispose();
       petrolCupertinoScrollController = FixedExtentScrollController(initialItem: selectedIndex);
       //print(selectedIndex);
     },
-    children: kPetrolList,
+    children: selectedFuelType == 'petrol' ? kPetrolList : kDieselList,
+
   );
 }

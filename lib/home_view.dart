@@ -18,14 +18,14 @@ class _HomeViewState extends State<HomeView> {
     super.initState();
     locationCupertinoScrollController = FixedExtentScrollController(initialItem: kLocationListIndex);
     fuelTypeCupertinoScrollController = FixedExtentScrollController(initialItem: kFuelTypeListIndex);
-    petrolCupertinoScrollController = FixedExtentScrollController(initialItem: kPetrolListIndex);
+    petrolCupertinoScrollController = FixedExtentScrollController(initialItem: kFuelGradeListIndex);
 
   }
 
   @override
   Widget build(BuildContext context) {
 
-    fuelPrice = petrolValue;
+    fuelPrice = selectedFuelType == 'petrol'? petrolValue: dieselValue;
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.fromLTRB(15.0, 30.0, 15.0, 15.0),
@@ -152,24 +152,35 @@ class _HomeViewState extends State<HomeView> {
                       Row(
                         children: [
                           Expanded(
-                            child: basicElevatedBTN(btnText: 'Calculate', onPressed: (){
-
-
-                              print('location is $selectedLocation');
-                              print('fuel type is $selectedFuelType');
-                              print('fuel grade/octane is $selectedOctaneType');
-                              recordIndexGeneration();
-                              //print('selected Record index is $selectedRecordIndex');
-
-
+                            child: basicElevatedBTN(
+                                btnText: 'Calculate',
+                                onPressed: (){
                               if (selectedFuelType == 'petrol'){
+                                petrolRecordIndexGeneration();
                                 getPetrolData(recordIndex: selectedRecordIndex);
-                                setState(() {
-                                  fuelPrice;
-                                });
+                                void updateLabelLater() {
+                                  Future.delayed(Duration(seconds: 2), () {
+                                    setState(() {
+                                      //fuelPrice = petrolValue;
+                                    });
+                                  });
+                                }
+                                  updateLabelLater();
+                              } else if (selectedFuelType == 'diesel'){
+                                dieselRecordIndexGeneration();
+                                getDieselData(recordIndex: selectedRecordIndex);
+                                void updateLabelLater() {
+                                  Future.delayed(Duration(seconds: 2), () {
+                                    setState(() {
+                                      fuelPrice = dieselValue;
+                                    });
+                                  });
+                                }
+                                updateLabelLater();
                               } else {
-                                print('run diesel method here');
+                                print('from_homeView => please select a fuel type');
                               }
+
                             })
                             ,),
                         ],
