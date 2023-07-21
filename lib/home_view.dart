@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'constants.dart';
 import 'fuel_data.dart';
@@ -12,6 +12,9 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 double fuelPrice = 00.00;
+String platform = (Platform.isIOS == true ? Platform.isIOS: Platform.isAndroid) as String;
+
+
 class _HomeViewState extends State<HomeView> {
  @override
   void initState() {
@@ -24,8 +27,13 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    loopThroughFuelTypeList();
+    if (selectedFuelType == 'petrol') {
+      fuelPrice = petrolValue;
+    } else if (selectedFuelType == 'diesel') {
+      fuelPrice = dieselValue;
+    }
 
-    fuelPrice = selectedFuelType == 'petrol'? petrolValue: dieselValue;
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.fromLTRB(15.0, 30.0, 15.0, 15.0),
@@ -53,11 +61,18 @@ class _HomeViewState extends State<HomeView> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text('Location'),
-                              //buildCupertinoPicker()
-                              basicElevatedBTN(btnText: 'Location',
-                                  onPressed: (){
-                                    showLocationActionSheet(context);
-                                  }
+                              //buildCupertinoPicker(),
+                              // Visibility(
+                              //     visible: Platform.isIOS,
+                              //     child: basicElevatedBTN(btnText: 'Location',
+                              //         onPressed: (){
+                              //           showLocationActionSheet(context);
+                              //         }
+                              //     )
+                              // ),
+                              Visibility(
+                                visible: Platform.isIOS,
+                                  child: buildAndroidLocationDropdown(),
                               )
                             ],
                           ),),
@@ -66,9 +81,16 @@ class _HomeViewState extends State<HomeView> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text('Fuel Type'),
-                              basicElevatedBTN(btnText: 'Fuel Type', onPressed: (){
-                              showFuelTypeActionSheet(context);
-                              })
+                              // Visibility(
+                              //     visible: Platform.isIOS,
+                              //     child: basicElevatedBTN(btnText: 'Fuel Type', onPressed: (){
+                              //       showFuelTypeActionSheet(context);
+                              //     })
+                              // ),
+                              Visibility(
+                                visible: Platform.isIOS,
+                                child: buildAndroidFuelTypeDropdown(),
+                              )
                             ],
                           ),),
                         ],
@@ -79,9 +101,13 @@ class _HomeViewState extends State<HomeView> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text('Fuel Grade'),
-                              basicElevatedBTN(btnText: 'Octane', onPressed: (){
-                                showPetrolTypeActionSheet(context);
-                              })
+                              Visibility(
+                                  visible:Platform.isIOS,
+                                  child: basicElevatedBTN(btnText: 'Octane', onPressed: (){
+                                    showPetrolTypeActionSheet(context);},
+                                  )
+                              )
+
                             ],
                           ),),
                           SizedBox(width: 20.0,),
@@ -92,20 +118,32 @@ class _HomeViewState extends State<HomeView> {
                               Container(
                                 width: 200.0,
                                 height: 50.0,
-                                child:Center(
-                                  child: Text(fuelPrice.toString(),
-                                      style: TextStyle(
-                                        fontSize: 30.0,
-                                        color: Colors.black54,
-                                      )
-                                  ),
-                                ),
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                     color: Colors.grey,
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(5),
+                                ),
+                                child:Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text('R ',
+                                          style: TextStyle(
+                                            fontSize: 30.0,
+                                            color: Colors.black54,
+                                          )
+                                      ),
+                                      Text(fuelPrice.toString(),
+                                          style: TextStyle(
+                                            fontSize: 30.0,
+                                            color: Colors.black54,
+                                          )
+                                      ),
+                                    ],
+                                  )
                                 ),
                               )
                             ],
@@ -118,7 +156,7 @@ class _HomeViewState extends State<HomeView> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text('Consumption'),
-                              TextField(
+                  TextField(
                                 keyboardType: TextInputType.number,
                                 onChanged: (value) {
                                   print('changed');
@@ -161,7 +199,7 @@ class _HomeViewState extends State<HomeView> {
                                 void updateLabelLater() {
                                   Future.delayed(Duration(seconds: 2), () {
                                     setState(() {
-                                      //fuelPrice = petrolValue;
+                                      fuelPrice = petrolValue;
                                     });
                                   });
                                 }
@@ -195,7 +233,11 @@ class _HomeViewState extends State<HomeView> {
       ),
     );
   }
+
+
 }
+
+
 
 
 
