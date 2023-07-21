@@ -27,7 +27,7 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    loopThroughFuelTypeList();
+
     if (selectedFuelType == 'petrol') {
       fuelPrice = petrolValue;
     } else if (selectedFuelType == 'diesel') {
@@ -62,17 +62,23 @@ class _HomeViewState extends State<HomeView> {
                             children: [
                               Text('Location'),
                               //buildCupertinoPicker(),
-                              // Visibility(
-                              //     visible: Platform.isIOS,
-                              //     child: basicElevatedBTN(btnText: 'Location',
-                              //         onPressed: (){
-                              //           showLocationActionSheet(context);
-                              //         }
-                              //     )
-                              // ),
+                              Visibility(
+                                  visible: Platform.isAndroid,
+                                  child: basicElevatedBTN(btnText: 'Location',
+                                      onPressed: (){
+                                        showLocationActionSheet(context);
+                                      }
+                                  )
+                              ),
                               Visibility(
                                 visible: Platform.isIOS,
-                                  child: buildAndroidLocationDropdown(),
+                                  child: buildAndroidLocationDropdown(
+                                      updateValueAndUI: (){
+                                        setState(() {
+                                          selectedLocation;
+                                        });
+                                      }
+                                  ),
                               )
                             ],
                           ),),
@@ -81,15 +87,21 @@ class _HomeViewState extends State<HomeView> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text('Fuel Type'),
-                              // Visibility(
-                              //     visible: Platform.isIOS,
-                              //     child: basicElevatedBTN(btnText: 'Fuel Type', onPressed: (){
-                              //       showFuelTypeActionSheet(context);
-                              //     })
-                              // ),
+                              Visibility(
+                                  visible: Platform.isAndroid,
+                                  child: basicElevatedBTN(btnText: 'Fuel Type', onPressed: (){
+                                    showFuelTypeActionSheet(context);
+                                  })
+                              ),
                               Visibility(
                                 visible: Platform.isIOS,
-                                child: buildAndroidFuelTypeDropdown(),
+                                child: buildAndroidFuelTypeDropdown(
+                                    updateValueAndUI: (){
+                                      setState(() {
+                                        selectedFuelType;
+                                      });
+                                    }
+                                ),
                               )
                             ],
                           ),),
@@ -102,12 +114,21 @@ class _HomeViewState extends State<HomeView> {
                             children: [
                               Text('Fuel Grade'),
                               Visibility(
-                                  visible:Platform.isIOS,
+                                  visible:Platform.isAndroid,
                                   child: basicElevatedBTN(btnText: 'Octane', onPressed: (){
                                     showPetrolTypeActionSheet(context);},
                                   )
+                              ),
+                              Visibility(
+                                visible: Platform.isIOS,
+                                  child: buildAndroidFuelGradeDropdown(
+                                      updateValueAndUI: (){
+                                        setState(() {
+                                          selectedFuelGrade;
+                                        });
+                                      }
+                                  )
                               )
-
                             ],
                           ),),
                           SizedBox(width: 20.0,),
@@ -193,31 +214,44 @@ class _HomeViewState extends State<HomeView> {
                             child: basicElevatedBTN(
                                 btnText: 'Calculate',
                                 onPressed: (){
-                              if (selectedFuelType == 'petrol'){
-                                petrolRecordIndexGeneration();
-                                getPetrolData(recordIndex: selectedRecordIndex);
-                                void updateLabelLater() {
-                                  Future.delayed(Duration(seconds: 2), () {
-                                    setState(() {
-                                      fuelPrice = petrolValue;
-                                    });
-                                  });
-                                }
-                                  updateLabelLater();
-                              } else if (selectedFuelType == 'diesel'){
-                                dieselRecordIndexGeneration();
-                                getDieselData(recordIndex: selectedRecordIndex);
-                                void updateLabelLater() {
-                                  Future.delayed(Duration(seconds: 2), () {
-                                    setState(() {
-                                      fuelPrice = dieselValue;
-                                    });
-                                  });
-                                }
-                                updateLabelLater();
-                              } else {
-                                print('from_homeView => please select a fuel type');
-                              }
+                                  if(Platform.isIOS == false){
+                                    if (selectedFuelType == 'petrol'){
+                                      petrolRecordIndexGeneration();
+                                      getPetrolData(recordIndex: selectedRecordIndex);
+                                      void updateLabelLater() {
+                                        Future.delayed(Duration(seconds: 2), () {
+                                          setState(() {
+                                            fuelPrice = petrolValue;
+                                          });
+                                        });
+                                      }
+                                      updateLabelLater();
+                                    } else if (selectedFuelType == 'diesel'){
+                                      dieselRecordIndexGeneration();
+                                      getDieselData(recordIndex: selectedRecordIndex);
+                                      void updateLabelLater() {
+                                        Future.delayed(Duration(seconds: 2), () {
+                                          setState(() {
+                                            fuelPrice = dieselValue;
+                                          });
+                                        });
+                                      }
+                                      updateLabelLater();
+                                    } else {
+                                      print('from_homeView => please select a fuel type (ios)');
+                                    }
+                                  } else {
+                                    if(selectedFuelType == 'petrol'){
+                                      getDieselData(recordIndex: selectedRecordIndex);
+
+                                    } else if (selectedFuelType == 'diesel'){
+                                      getDieselData(recordIndex: selectedRecordIndex);
+                                    } else {
+                                      print('from_homeView => please select a fuel type (android)');
+                                    }
+
+
+                                  }
 
                             })
                             ,),
@@ -233,7 +267,6 @@ class _HomeViewState extends State<HomeView> {
       ),
     );
   }
-
 
 }
 

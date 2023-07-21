@@ -13,7 +13,7 @@ var fuelTypeCupertinoScrollController = FixedExtentScrollController(initialItem:
 var petrolCupertinoScrollController = FixedExtentScrollController(initialItem: kFuelGradeListIndex);
 
 
-//location ios picker
+//1. iOS - location picker Modal
 Future<void> showLocationActionSheet(BuildContext context) async {
   await showCupertinoModalPopup(
     context: context,
@@ -39,6 +39,7 @@ Future<void> showLocationActionSheet(BuildContext context) async {
   }
   //print(kLocationListIndex);
 }
+//1. iOS - location picker CupertinoPicker
 CupertinoPicker buildLocationCupertinoPicker() {
   return CupertinoPicker(
     scrollController: locationCupertinoScrollController,
@@ -54,7 +55,7 @@ CupertinoPicker buildLocationCupertinoPicker() {
   );
 }
 
-//fuel type button type ios picker
+//2. iOS - fuel type picker Modal
 Future <void> showFuelTypeActionSheet(BuildContext context) async {
   await showCupertinoModalPopup(
     context: context,
@@ -78,6 +79,7 @@ Future <void> showFuelTypeActionSheet(BuildContext context) async {
   }
   //print('modal dismissed $kFuelTypeListIndex');
 }
+//2. iOS - fuel type picker CupertinoPicker
 CupertinoPicker buildFuelTypeCupertinoPicker() {
   return CupertinoPicker(
     scrollController: fuelTypeCupertinoScrollController,
@@ -94,7 +96,7 @@ CupertinoPicker buildFuelTypeCupertinoPicker() {
   );
 }
 
-//fuel grade button ios picker (Petrol + Diesel)
+//3. iOS - fuel grade picker Modal (petrol + diesel)
 Future<void> showPetrolTypeActionSheet (BuildContext context) async {
   await showCupertinoModalPopup(
     context: context,
@@ -141,6 +143,7 @@ Future<void> showPetrolTypeActionSheet (BuildContext context) async {
   //print('modal dismissed $selectedOctaneType');
   //getPetrolData(recordIndex: kLocationListIndex);
 }
+//3. iOS - fuel grade picker CupertinoPicker
 CupertinoPicker buildPetrolCupertinoPicker() {
   return CupertinoPicker(
     scrollController: petrolCupertinoScrollController,
@@ -160,18 +163,21 @@ CupertinoPicker buildPetrolCupertinoPicker() {
 }
 
 
-//location android dropdown
-Widget buildAndroidLocationDropdown() {
+
+//1. Android - location dropdown
+Widget buildAndroidLocationDropdown({required Function updateValueAndUI}) {
+
   return DropdownButton<String>(
-    value: ((kLocationList[0] as Center).child as Text).data,
+    value: selectedLocation,
     items: loopThroughLocationList(),
     onChanged: (value) {
       selectedLocation = value!;
+      updateValueAndUI();
       print('Selected location is $selectedLocation');
     },
   );
 }
-//location items loop
+//1. Android - location dropdown items - loop
 List<DropdownMenuItem<String>> loopThroughLocationList (){
   List<DropdownMenuItem<String>> dropdownLocationList = [];
 
@@ -187,21 +193,31 @@ List<DropdownMenuItem<String>> loopThroughLocationList (){
   return dropdownLocationList;
 }
 
-//fuel type android dropdown
-DropdownButton<String> buildAndroidFuelTypeDropdown() {
+//2. Android - fuel type dropdown
+DropdownButton<String> buildAndroidFuelTypeDropdown({required Function updateValueAndUI}) {
+
+  // String localFuelType = 'petrol';
+  // String checkFuelType = '';
+  // try{
+  //   checkFuelType = selectedFuelType;
+  // }catch(e){
+  //   selectedFuelType = localFuelType;
+  //   print('PS you did not select a fuel type so we used a default value. ERROR: $e');
+  // }
   return DropdownButton<String>(
-    value: ((kFuelTypeList[0] as Center).child as Text).data,
+
+    value: selectedFuelType,
     items: loopThroughFuelTypeList(),
     onChanged: (value){
         selectedFuelType = value!;
+        updateValueAndUI();
       print('Selected fuel type is $selectedFuelType');
-
     },
   );
 }
-
-//Fuel type Item
+//2. Android - fuel type dropdown items - loop
 List<DropdownMenuItem<String>> loopThroughFuelTypeList(){
+
   List<DropdownMenuItem<String>> dropdownFuelTypeList = [];
   for(int i = 0; i < kFuelTypeList.length; i++){
     String fuelTypeListText = ((kFuelTypeList[i] as Center).child as Text).data!;
@@ -215,4 +231,50 @@ List<DropdownMenuItem<String>> loopThroughFuelTypeList(){
   return dropdownFuelTypeList;
 }
 
-//fuel type dropdown
+
+//3. Android - fuel grade dropdown
+DropdownButton<String> buildAndroidFuelGradeDropdown({required Function updateValueAndUI}) {
+
+
+
+  return DropdownButton<String>(
+    value: selectedFuelType == 'petrol'? ((kPetrolList[0] as Center).child as Text).data: ((kDieselList[0] as Center).child as Text).data,
+
+
+    items: selectedFuelType == 'petrol'? loopThroughPetrolList(): loopThroughDieselList(),
+    onChanged: (value){
+      selectedFuelGrade = value!;
+      print('Fuel grade printed value: $value');
+    },
+  );
+
+}
+
+//3. Android - fuel type dropdown items - loop (petrol)
+List<DropdownMenuItem<String>> loopThroughPetrolList(){
+  List<DropdownMenuItem<String>> dropdownPetrolList = [];
+  for(int i = 0; i < kPetrolList.length; i++){
+    String fuelGradeListText = ((kPetrolList[i] as Center).child as Text).data!;
+    //print(fuelGradeListText);
+    var androidFuelGradeItem = DropdownMenuItem(
+      value: fuelGradeListText,
+      child: Text(fuelGradeListText),
+    );
+    dropdownPetrolList.add(androidFuelGradeItem);
+  }
+  return dropdownPetrolList;
+}
+//3. Android - fuel type dropdown items - loop (petrol)
+List<DropdownMenuItem<String>> loopThroughDieselList(){
+  List<DropdownMenuItem<String>> dropdownDieselList = [];
+  for(int i = 0; i < kDieselList.length; i++){
+    String fuelGradeListText = ((kDieselList[i] as Center).child as Text).data!;
+    //print(fuelGradeListText);
+    var androidFuelGradeItem = DropdownMenuItem(
+      value: fuelGradeListText,
+      child: Text(fuelGradeListText),
+    );
+    dropdownDieselList.add(androidFuelGradeItem);
+  }
+  return dropdownDieselList;
+}
