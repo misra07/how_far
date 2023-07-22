@@ -63,7 +63,7 @@ class _HomeViewState extends State<HomeView> {
                               Text('Location'),
                               //buildCupertinoPicker(),
                               Visibility(
-                                  visible: Platform.isAndroid,
+                                  visible: Platform.isIOS,
                                   child: basicElevatedBTN(btnText: 'Location',
                                       onPressed: (){
                                         showLocationActionSheet(context);
@@ -71,7 +71,7 @@ class _HomeViewState extends State<HomeView> {
                                   )
                               ),
                               Visibility(
-                                visible: Platform.isIOS,
+                                visible: Platform.isAndroid,
                                   child: buildAndroidLocationDropdown(
                                       updateValueAndUI: (){
                                         setState(() {
@@ -88,17 +88,17 @@ class _HomeViewState extends State<HomeView> {
                             children: [
                               Text('Fuel Type'),
                               Visibility(
-                                  visible: Platform.isAndroid,
+                                  visible: Platform.isIOS,
                                   child: basicElevatedBTN(btnText: 'Fuel Type', onPressed: (){
                                     showFuelTypeActionSheet(context);
                                   })
                               ),
                               Visibility(
-                                visible: Platform.isIOS,
+                                visible: Platform.isAndroid,
                                 child: buildAndroidFuelTypeDropdown(
                                     updateValueAndUI: (){
                                       setState(() {
-                                        selectedFuelType;
+                                        //selectedFuelType;
                                       });
                                     }
                                 ),
@@ -114,17 +114,18 @@ class _HomeViewState extends State<HomeView> {
                             children: [
                               Text('Fuel Grade'),
                               Visibility(
-                                  visible:Platform.isAndroid,
+                                  visible:Platform.isIOS,
                                   child: basicElevatedBTN(btnText: 'Octane', onPressed: (){
                                     showPetrolTypeActionSheet(context);},
                                   )
                               ),
                               Visibility(
-                                visible: Platform.isIOS,
+                                visible: Platform.isAndroid,
                                   child: buildAndroidFuelGradeDropdown(
-                                      updateValueAndUI: (){
+                                      updateiOSValueAndUI: (){
                                         setState(() {
                                           selectedFuelGrade;
+                                          print('supposed to upgrade $selectedFuelGrade');
                                         });
                                       }
                                   )
@@ -177,7 +178,7 @@ class _HomeViewState extends State<HomeView> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text('Consumption'),
-                  TextField(
+                              TextField(
                                 keyboardType: TextInputType.number,
                                 onChanged: (value) {
                                   print('changed');
@@ -214,7 +215,8 @@ class _HomeViewState extends State<HomeView> {
                             child: basicElevatedBTN(
                                 btnText: 'Calculate',
                                 onPressed: (){
-                                  if(Platform.isIOS == false){
+                                  //iOS
+                                  if(Platform.isIOS == true){
                                     if (selectedFuelType == 'petrol'){
                                       petrolRecordIndexGeneration();
                                       getPetrolData(recordIndex: selectedRecordIndex);
@@ -240,12 +242,30 @@ class _HomeViewState extends State<HomeView> {
                                     } else {
                                       print('from_homeView => please select a fuel type (ios)');
                                     }
-                                  } else {
+                                  }
+                                  //android
+                                  else {
+                                    print('testing Android');
                                     if(selectedFuelType == 'petrol'){
-                                      getDieselData(recordIndex: selectedRecordIndex);
+                                      petrolRecordIndexGeneration();
+                                      getPetrolData(recordIndex: selectedRecordIndex);
+                                      //print('petrol record at selected index $selectedRecordIndex');
 
+                                      Future.delayed(Duration(seconds: 2), () {
+                                        setState(() {
+                                          fuelPrice = petrolValue;
+                                        });
+                                      });
+                                      //print('selected record index: $selectedRecordIndex');
                                     } else if (selectedFuelType == 'diesel'){
+                                      dieselRecordIndexGeneration();
                                       getDieselData(recordIndex: selectedRecordIndex);
+                                      Future.delayed(Duration(seconds: 2), () {
+                                        setState(() {
+                                          fuelPrice = petrolValue;
+                                        });
+                                      });
+                                      //print('selected record index: $selectedRecordIndex');
                                     } else {
                                       print('from_homeView => please select a fuel type (android)');
                                     }

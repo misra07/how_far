@@ -1,6 +1,6 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:how_far/fuel_data.dart';
 import 'constants.dart';
 
 late String selectedLocation = 'Reef';
@@ -196,21 +196,13 @@ List<DropdownMenuItem<String>> loopThroughLocationList (){
 //2. Android - fuel type dropdown
 DropdownButton<String> buildAndroidFuelTypeDropdown({required Function updateValueAndUI}) {
 
-  // String localFuelType = 'petrol';
-  // String checkFuelType = '';
-  // try{
-  //   checkFuelType = selectedFuelType;
-  // }catch(e){
-  //   selectedFuelType = localFuelType;
-  //   print('PS you did not select a fuel type so we used a default value. ERROR: $e');
-  // }
   return DropdownButton<String>(
 
-    value: selectedFuelType,
+    value: selectedFuelType.isEmpty? 'petrol': selectedFuelType,
     items: loopThroughFuelTypeList(),
     onChanged: (value){
-        selectedFuelType = value!;
-        updateValueAndUI();
+      selectedFuelType = value!;
+      updateValueAndUI();
       print('Selected fuel type is $selectedFuelType');
     },
   );
@@ -224,7 +216,7 @@ List<DropdownMenuItem<String>> loopThroughFuelTypeList(){
     //print(fuelTypeListText);
     var androidFuelTypeItem = DropdownMenuItem(
       value: fuelTypeListText,
-        child: Text(fuelTypeListText),
+      child: Text(fuelTypeListText),
     );
     dropdownFuelTypeList.add(androidFuelTypeItem);
   }
@@ -233,18 +225,40 @@ List<DropdownMenuItem<String>> loopThroughFuelTypeList(){
 
 
 //3. Android - fuel grade dropdown
-DropdownButton<String> buildAndroidFuelGradeDropdown({required Function updateValueAndUI}) {
-
-
-
+int fuelGradeIndex = 0;
+bool isPetrol = true;
+DropdownButton<String> buildAndroidFuelGradeDropdown({required Function updateiOSValueAndUI}) {
+  if(selectedFuelType == ''){
+    selectedFuelType = 'petrol';
+  }
+  if(selectedFuelType == 'diesel' && fuelGradeIndex == 2){
+    fuelGradeIndex = 0;
+    print('fuelGradeIndex reset');
+    }
   return DropdownButton<String>(
-    value: selectedFuelType == 'petrol'? ((kPetrolList[0] as Center).child as Text).data: ((kDieselList[0] as Center).child as Text).data,
-
-
+    value: selectedFuelType == 'petrol'? ((kPetrolList[fuelGradeIndex] as Center).child as Text).data: ((kDieselList[fuelGradeIndex] as Center).child as Text).data,
     items: selectedFuelType == 'petrol'? loopThroughPetrolList(): loopThroughDieselList(),
     onChanged: (value){
       selectedFuelGrade = value!;
-      print('Fuel grade printed value: $value');
+      if(selectedFuelType == 'petrol'){
+
+        switch(selectedFuelGrade){
+          case '95 LRP':
+            fuelGradeIndex = 0;
+          case '95 unleaded':
+            fuelGradeIndex = 1;
+          case '93 unleaded':
+            fuelGradeIndex = 2;
+        }
+      } else if(selectedFuelType == 'diesel'){
+        switch (selectedFuelGrade){
+          case '50 PPM':
+            fuelGradeIndex = 0;
+          case '500 PPM':
+              fuelGradeIndex = 1;
+          }
+        }
+      updateiOSValueAndUI();
     },
   );
 
