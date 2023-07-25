@@ -21,7 +21,9 @@ void getPetrolData({required int recordIndex}) async {
   petrolValue = jsonDecode(fullResponse)['petrol'][recordIndex]['value']/100;
 
   print('from getPetrolData $petrolLocation, $petrolOctane $petrolType, $petrolValue');
+  print('####### $petrolValue');
 }
+
 
 late String dieselLocation;
 late String dieselPPM;

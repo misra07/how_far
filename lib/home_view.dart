@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'picker_dropdown.dart';
 import 'basic_button.dart';
 import 'record_index_generator.dart';
+import 'displayFields.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -13,7 +14,8 @@ class HomeView extends StatefulWidget {
 }
 double fuelPrice = 00.00;
 String platform = (Platform.isIOS == true ? Platform.isIOS: Platform.isAndroid) as String;
-
+double distance = 00.00;
+double consumption = 00.00;
 
 class _HomeViewState extends State<HomeView> {
  @override
@@ -152,18 +154,8 @@ class _HomeViewState extends State<HomeView> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text('R ',
-                                          style: TextStyle(
-                                            fontSize: 30.0,
-                                            color: Colors.black54,
-                                          )
-                                      ),
-                                      Text(fuelPrice.toString(),
-                                          style: TextStyle(
-                                            fontSize: 30.0,
-                                            color: Colors.black54,
-                                          )
-                                      ),
+                                      buildMainDisplayText(enteredText: 'R '),
+                                      buildMainDisplayText(enteredText: fuelPrice.toString()),
                                     ],
                                   )
                                 ),
@@ -177,14 +169,15 @@ class _HomeViewState extends State<HomeView> {
                           Expanded(child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('Consumption'),
+                              Text('Distance (km)'),
                               TextField(
                                 keyboardType: TextInputType.number,
                                 onChanged: (value) {
-                                  print('changed');
+                                  print('DISTANCE: $value');
+                                  distance = double.parse(value);
                                 },
                                 decoration: InputDecoration(
-                                  labelText: 'Enter some text',
+                                  labelText: distance.toString(),
                                   border: OutlineInputBorder(),
                                 ),
                               ),
@@ -194,14 +187,15 @@ class _HomeViewState extends State<HomeView> {
                           Expanded(child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('Distance'),
+                              Text('Consumption'),
                               TextField(
                                 keyboardType: TextInputType.number,
                                 onChanged: (value) {
-                                  print('changed');
+                                  print('CONSUMPTION $value');
+                                  consumption = double.parse(value);
                                 },
                                 decoration: InputDecoration(
-                                  labelText: 'Enter some text',
+                                  labelText: consumption.toString(),
                                   border: OutlineInputBorder(),
                                 ),
                               ),
@@ -220,14 +214,19 @@ class _HomeViewState extends State<HomeView> {
                                     if (selectedFuelType == 'petrol'){
                                       petrolRecordIndexGeneration();
                                       getPetrolData(recordIndex: selectedRecordIndex);
+                                      fuelPrice = petrolValue;
                                       void updateLabelLater() {
-                                        Future.delayed(Duration(seconds: 2), () {
+                                        Future.delayed(Duration(seconds: 0), () {
                                           setState(() {
-                                            fuelPrice = petrolValue;
+                                            fuelPrice;
                                           });
+                                          var totalCost = (distance/consumption)*fuelPrice;
+                                          print('The total cost is: $totalCost');
                                         });
                                       }
                                       updateLabelLater();
+                                      var totalCost = (distance/consumption)*fuelPrice;
+
                                     } else if (selectedFuelType == 'diesel'){
                                       dieselRecordIndexGeneration();
                                       getDieselData(recordIndex: selectedRecordIndex);
@@ -250,30 +249,28 @@ class _HomeViewState extends State<HomeView> {
                                       petrolRecordIndexGeneration();
                                       getPetrolData(recordIndex: selectedRecordIndex);
                                       //print('petrol record at selected index $selectedRecordIndex');
-
+                                      fuelPrice = petrolValue;
                                       Future.delayed(Duration(seconds: 2), () {
                                         setState(() {
-                                          fuelPrice = petrolValue;
+                                          fuelPrice;
                                         });
                                       });
                                       //print('selected record index: $selectedRecordIndex');
                                     } else if (selectedFuelType == 'diesel'){
                                       dieselRecordIndexGeneration();
                                       getDieselData(recordIndex: selectedRecordIndex);
+                                      fuelPrice = petrolValue;
                                       Future.delayed(Duration(seconds: 2), () {
                                         setState(() {
-                                          fuelPrice = petrolValue;
+                                          fuelPrice;
                                         });
                                       });
                                       //print('selected record index: $selectedRecordIndex');
                                     } else {
                                       print('from_homeView => please select a fuel type (android)');
                                     }
-
-
                                   }
-
-                            })
+                                })
                             ,),
                         ],
                       ),
@@ -287,6 +284,8 @@ class _HomeViewState extends State<HomeView> {
       ),
     );
   }
+
+
 
 }
 
