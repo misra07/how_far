@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'picker_dropdown.dart';
 import 'basic_button.dart';
 import 'record_index_generator.dart';
-import 'displayFields.dart';
+import 'display_fields.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -16,6 +16,7 @@ double fuelPrice = 00.00;
 String platform = (Platform.isIOS == true ? Platform.isIOS: Platform.isAndroid) as String;
 double distance = 00.00;
 double consumption = 00.00;
+double? totalCost;
 
 class _HomeViewState extends State<HomeView> {
  @override
@@ -209,23 +210,27 @@ class _HomeViewState extends State<HomeView> {
                             child: basicElevatedBTN(
                                 btnText: 'Calculate',
                                 onPressed: (){
+
                                   //iOS
                                   if(Platform.isIOS == true){
                                     if (selectedFuelType == 'petrol'){
                                       petrolRecordIndexGeneration();
                                       getPetrolData(recordIndex: selectedRecordIndex);
                                       fuelPrice = petrolValue;
+
                                       void updateLabelLater() {
-                                        Future.delayed(Duration(seconds: 0), () {
+                                        Future.delayed(Duration(seconds: 2), () {
                                           setState(() {
                                             fuelPrice;
+                                            totalCost = (distance/consumption)*fuelPrice;
+                                            print('The total cost is: $totalCost');
                                           });
-                                          var totalCost = (distance/consumption)*fuelPrice;
-                                          print('The total cost is: $totalCost');
+                                          
+
                                         });
                                       }
                                       updateLabelLater();
-                                      var totalCost = (distance/consumption)*fuelPrice;
+                                      //var totalCost = (distance/consumption)*fuelPrice;
 
                                     } else if (selectedFuelType == 'diesel'){
                                       dieselRecordIndexGeneration();
