@@ -172,14 +172,20 @@ class _HomeViewState extends State<HomeView> {
                             children: [
                               Text('Distance (km)'),
                               TextField(
+
                                 keyboardType: TextInputType.number,
                                 onChanged: (value) {
                                   print('DISTANCE: $value');
                                   distance = double.parse(value);
                                 },
                                 decoration: InputDecoration(
-                                  labelText: distance.toString(),
+                                  //labelText: distance.toString(),
+                                  hintText: 'KM',
                                   border: OutlineInputBorder(),
+                                ),
+                                style: TextStyle(
+                                  fontSize: 30.0,
+                                  color: Colors.black54,
                                 ),
                               ),
                             ],
@@ -196,9 +202,13 @@ class _HomeViewState extends State<HomeView> {
                                   consumption = double.parse(value);
                                 },
                                 decoration: InputDecoration(
-                                  labelText: consumption.toString(),
+                                  hintText: 'L/KM',
                                   border: OutlineInputBorder(),
                                 ),
+                                style: TextStyle(
+                                fontSize: 30.0,
+                                color: Colors.black54,
+                              ),
                               ),
                             ],
                           ),),
@@ -217,15 +227,15 @@ class _HomeViewState extends State<HomeView> {
                                       petrolRecordIndexGeneration();
                                       getPetrolData(recordIndex: selectedRecordIndex);
                                       fuelPrice = petrolValue;
+                                      totalCost = (distance/consumption)*fuelPrice;
 
                                       void updateLabelLater() {
                                         Future.delayed(Duration(seconds: 2), () {
                                           setState(() {
                                             fuelPrice;
-                                            totalCost = (distance/consumption)*fuelPrice;
-                                            print('The total cost is: $totalCost');
+                                            print('### total cost =>$totalCost');
                                           });
-                                          
+
 
                                         });
                                       }
@@ -239,6 +249,8 @@ class _HomeViewState extends State<HomeView> {
                                         Future.delayed(Duration(seconds: 2), () {
                                           setState(() {
                                             fuelPrice = dieselValue;
+                                            totalCost = (distance/consumption)*fuelPrice;
+                                            print('The total DIESEL cost is: R $totalCost');
                                           });
                                         });
                                       }
@@ -258,6 +270,8 @@ class _HomeViewState extends State<HomeView> {
                                       Future.delayed(Duration(seconds: 2), () {
                                         setState(() {
                                           fuelPrice;
+                                          totalCost = (distance/consumption)*fuelPrice;
+                                          print('The total PETROL cost is: R $totalCost');
                                         });
                                       });
                                       //print('selected record index: $selectedRecordIndex');
@@ -265,9 +279,14 @@ class _HomeViewState extends State<HomeView> {
                                       dieselRecordIndexGeneration();
                                       getDieselData(recordIndex: selectedRecordIndex);
                                       fuelPrice = petrolValue;
+                                      print('A');
                                       Future.delayed(Duration(seconds: 2), () {
                                         setState(() {
+                                          print('B');
                                           fuelPrice;
+                                          print('C');
+                                          totalCost = (distance/consumption)*fuelPrice;
+                                          print('The total DIESEL cost is: R $totalCost');
                                         });
                                       });
                                       //print('selected record index: $selectedRecordIndex');

@@ -11,3 +11,4 @@ Text buildMainDisplayText({required String enteredText}) {
       )
   );
 }
+
