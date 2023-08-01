@@ -15,5 +15,5 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)registerWithRegistry:(NSObject<FlutterPluginRegistry>*)registry;
 @end
 
-NS_ASSUME_NONNULL_END;
+NS_ASSUME_NONNULL_END
 #endif /* GeneratedPluginRegistrant_h */
