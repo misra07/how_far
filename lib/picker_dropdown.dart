@@ -117,12 +117,9 @@ Future<void> showPetrolTypeActionSheet (BuildContext context) async {
     kFuelGradeListIndex;
     switch(kFuelGradeListIndex){
       case 0:
-        selectedFuelGrade = '95 LRP';
-        break;
-      case 1:
         selectedFuelGrade = '95 unleaded';
         break;
-      case 2:
+      case 1:
         selectedFuelGrade = '93 unleaded';
         break;
     }
@@ -243,12 +240,10 @@ DropdownButton<String> buildAndroidFuelGradeDropdown({required Function updateiO
       if(selectedFuelType == 'petrol'){
 
         switch(selectedFuelGrade){
-          case '95 LRP':
-            fuelGradeIndex = 0;
           case '95 unleaded':
-            fuelGradeIndex = 1;
+            fuelGradeIndex = 0;
           case '93 unleaded':
-            fuelGradeIndex = 2;
+            fuelGradeIndex = 1;
         }
       } else if(selectedFuelType == 'diesel'){
         switch (selectedFuelGrade){

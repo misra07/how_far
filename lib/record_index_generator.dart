@@ -5,9 +5,6 @@ late int selectedRecordIndex;
 void petrolRecordIndexGeneration() {
   if (selectedLocation == 'Reef'){
     switch (selectedFuelGrade){
-      case '95 LRP':
-        selectedRecordIndex = 0;
-        break;
       case '93 unleaded':
         selectedRecordIndex = 1;
         break;
@@ -17,9 +14,6 @@ void petrolRecordIndexGeneration() {
     }
   } else if (selectedLocation == 'Coast'){
     switch (selectedFuelGrade){
-      case '95 LRP':
-        selectedRecordIndex = 3;
-        break;
       case '93 unleaded':
         selectedRecordIndex = 2;
         break;

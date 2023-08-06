@@ -1,5 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
+import 'package:how_far/picker_dropdown.dart';
 import 'constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -9,19 +10,31 @@ late String petrolLocation;
 late String petrolOctane;
 late String petrolType;
 double petrolValue = 00;
+bool canGetFuelData = true;
+
+
 
 void getPetrolData({required int recordIndex}) async {
 
+
   http.Response response = await http.get(kFSAUrl, headers: {'Key': kFSAkey});
 
-  String fullResponse = response.body;
-  petrolLocation = jsonDecode(fullResponse)['petrol'][recordIndex]['location'];
-  petrolOctane = jsonDecode(fullResponse)['petrol'][recordIndex]['octane'];
-  petrolType = jsonDecode(fullResponse)['petrol'][recordIndex]['type'];
-  petrolValue = jsonDecode(fullResponse)['petrol'][recordIndex]['value']/100;
+  if (response.statusCode == 200){
+    String fullResponse = response.body;
+    petrolLocation = jsonDecode(fullResponse)['petrol'][recordIndex]['location'];
+    petrolOctane = jsonDecode(fullResponse)['petrol'][recordIndex]['octane'];
+    petrolType = jsonDecode(fullResponse)['petrol'][recordIndex]['type'];
+    petrolValue = jsonDecode(fullResponse)['petrol'][recordIndex]['value']/100;
+    canGetFuelData = true;
 
-  print('from getPetrolData $petrolLocation, $petrolOctane $petrolType, $petrolValue');
-  print('####### $petrolValue');
+    //print('from getPetrolData $petrolLocation, $petrolOctane $petrolType, $petrolValue');
+    //print('####### $petrolValue');
+  } else {
+    print('something went wrong');
+    //canGetFuelData = false;
+
+  }
+
 }
 
 
@@ -41,12 +54,3 @@ void getDieselData({required int recordIndex}) async {
 }
 
 
-
-// //var petrol = jsonDecode(fullResponse)[fuelType];
-// location = jsonDecode(fullResponse)[fuelType][2]['location'];
-// octane = jsonDecode(fullResponse)[fuelType][0]['octane'];
-// type = jsonDecode(fullResponse)[fuelType][0]['type'];
-// value = jsonDecode(fullResponse)[fuelType][0]['value'];
-// dvalue = value/100;
-//
-// print('$location, $octane, $type, $dvalue');
