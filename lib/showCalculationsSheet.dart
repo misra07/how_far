@@ -7,6 +7,7 @@ class TotalResultsSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('bottom sheet raised');
     return Container(
       color: Color(0xff737373),
       child: Container(
@@ -34,16 +35,21 @@ class TotalResultsSheet extends StatelessWidget {
                   indent: 16.0,        // Customize the indent (empty space before the divider starts)
                   endIndent: 16.0,     // Customize the end indent (empty space after the divider ends)
                 ),
-                SizedBox(),
+                SizedBox(height: 10.0),
+                Text('R $fuelPrice per Liter',
+                  style: TextStyle(
+                    fontSize: 25.0,
+                  ),
+                ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10.0),
                   child: Column(
                     children: [
-                      SizedBox(height: 20.0),
+                      SizedBox(height: 15.0),
                       TravelDetailsItem(title: 'Distance', text1: '$distance', text2: 'KM'),
-                      SizedBox(height: 20.0),
+                      SizedBox(height: 15.0),
                       TravelDetailsItem(title: 'AVG Consumption', text1: '$consumption', text2: 'KM/L'),
-                      SizedBox(height: 20.0),
+                      SizedBox(height: 15.0),
                       TravelDetailsItem(title: 'Travel Cost', text1: 'R ', text2: '$totalCost'),
                     ],
                   ),
@@ -92,4 +98,8 @@ class TravelDetailsItem extends StatelessWidget {
       ),
     );
   }
+}
+
+void statusPrinter(){
+  print('bottom sheet raised');
 }

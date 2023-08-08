@@ -17,10 +17,12 @@ class HomeView extends StatefulWidget {
 
 double fuelPrice = 00.00;
 String platform =
-    (Platform.isIOS == true ? Platform.isIOS : Platform.isAndroid) as String;
+(Platform.isIOS == true ? Platform.isIOS : Platform.isAndroid) as String;
 double distance = 00.00;
 double consumption = 00.00;
 double? totalCost;
+
+
 
 Widget buildBottomSheet(BuildContext context) => TotalResultsSheet();
 
@@ -36,6 +38,7 @@ class _HomeViewState extends State<HomeView> {
         FixedExtentScrollController(initialItem: kFuelGradeListIndex);
   }
 
+
   @override
   Widget build(BuildContext context) {
     if (selectedFuelType == 'petrol') {
@@ -50,13 +53,10 @@ class _HomeViewState extends State<HomeView> {
         child: SafeArea(
           child: Column(
             children: [
-              Container(
-                width: 80.0,
-                height: 80.0,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.green,
-                ),
+              CircleAvatar(
+                radius: 50.0,
+                //backgroundColor: Colors.red,
+                backgroundImage: AssetImage('assets/howfarLogo.png'),
               ),
               const SizedBox(height: 20.0),
               Expanded(
@@ -84,10 +84,10 @@ class _HomeViewState extends State<HomeView> {
                                     visible: Platform.isAndroid,
                                     child: buildAndroidLocationDropdown(
                                         updateValueAndUI: () {
-                                      setState(() {
-                                        selectedLocation;
-                                      });
-                                    }),
+                                          setState(() {
+                                            selectedLocation;
+                                          });
+                                        }),
                                   )
                                 ],
                               ),
@@ -111,10 +111,10 @@ class _HomeViewState extends State<HomeView> {
                                     visible: Platform.isAndroid,
                                     child: buildAndroidFuelTypeDropdown(
                                         updateValueAndUI: () {
-                                      setState(() {
-                                        //selectedFuelType;
-                                      });
-                                    }),
+                                          setState(() {
+                                            //selectedFuelType;
+                                          });
+                                        }),
                                   )
                                 ],
                               ),
@@ -140,12 +140,12 @@ class _HomeViewState extends State<HomeView> {
                                       visible: Platform.isAndroid,
                                       child: buildAndroidFuelGradeDropdown(
                                           updateiOSValueAndUI: () {
-                                        setState(() {
-                                          selectedFuelGrade;
-                                          print(
-                                              'supposed to upgrade $selectedFuelGrade');
-                                        });
-                                      }))
+                                            setState(() {
+                                              selectedFuelGrade;
+                                              print(
+                                                  'supposed to upgrade $selectedFuelGrade');
+                                            });
+                                          }))
                                 ],
                               ),
                             ),
@@ -172,13 +172,13 @@ class _HomeViewState extends State<HomeView> {
                                             horizontal: 20),
                                         child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                           children: [
                                             buildMainDisplayText(
                                                 enteredText: 'R '),
                                             buildMainDisplayText(
                                                 enteredText:
-                                                    fuelPrice.toString()),
+                                                fuelPrice.toString()),
                                           ],
                                         )),
                                   )
@@ -261,57 +261,57 @@ class _HomeViewState extends State<HomeView> {
                                             context: context,
                                             builder: (context) => iOSErrorAlert(
                                                 errorMessage:
-                                                    'Please select your fuel type info. \n i.e: Petrol, 95 Unleaded'));
+                                                'Please select your fuel type info. \n i.e: Petrol, 95 Unleaded'));
                                       }
                                       if (selectedFuelType == 'petrol' &&
                                           canGetFuelData == true) {
                                         petrolRecordIndexGeneration();
                                         getPetrolData(
                                             recordIndex: selectedRecordIndex);
-                                        fuelPrice = petrolValue;
-                                        totalCost = (distance / consumption) *
-                                            fuelPrice;
-                                        totalCost = double.parse(
-                                            totalCost!.toStringAsFixed(2));
-                                        showModalBottomSheet(
-                                            context: context,
-                                            builder: buildBottomSheet);
-                                        void updateLabelLater() {
-                                          Future.delayed(Duration(seconds: 2),
-                                              () {
-                                            setState(() {
-                                              fuelPrice;
-                                              print(
-                                                  '###FINAL total cost =>$totalCost');
-                                            });
-                                          });
-                                        }
+                                        //fuelPrice = petrolValue;
 
-                                        updateLabelLater();
+                                        Future<void> updateDetails() async {
+                                          await Future.delayed(Duration(seconds: 1));
+
+                                          setState(() {
+                                            fuelPrice = petrolValue;
+                                            totalCost = (distance / consumption) *
+                                                fuelPrice;
+                                            totalCost = double.parse(
+                                                totalCost!.toStringAsFixed(2));
+                                            print('###FINAL fuel price => $fuelPrice and $petrolValue');
+                                          });
+
+                                          showModalBottomSheet(
+                                            context: context,
+                                            builder: buildBottomSheet,
+                                          );
+                                        }
+                                        updateDetails();
+
                                         //var totalCost = (distance/consumption)*fuelPrice;
                                       } else if (selectedFuelType == 'diesel') {
                                         dieselRecordIndexGeneration();
                                         getDieselData(
                                             recordIndex: selectedRecordIndex);
-                                        totalCost = (distance / consumption) *
-                                            fuelPrice;
-                                        totalCost = double.parse(
-                                            totalCost!.toStringAsFixed(2));
-                                        showModalBottomSheet(
-                                            context: context,
-                                            builder: buildBottomSheet);
-                                        void updateLabelLater() {
-                                          Future.delayed(Duration(seconds: 2),
-                                              () {
-                                            setState(() {
-                                              fuelPrice = dieselValue;
-                                              print(
-                                                  'The total DIESEL cost is: R $totalCost');
-                                            });
-                                          });
-                                        }
 
-                                        updateLabelLater();
+                                        Future<void> updateDetails() async {
+                                          await Future.delayed(Duration(seconds: 1));
+                                          setState(() {
+                                            fuelPrice = dieselValue;
+                                            totalCost = (distance / consumption) *
+                                                fuelPrice;
+                                            totalCost = double.parse(
+                                                totalCost!.toStringAsFixed(2));
+                                            print('###FINAL fuel price => $fuelPrice and 000000 $dieselValue 000000');
+                                          });
+                                          showModalBottomSheet(
+                                            context: context,
+                                            builder: buildBottomSheet,
+                                          );
+                                        }
+                                        updateDetails();
+
                                       } else {
                                         print(
                                             'from_homeView => please select a fuel type (ios)');
@@ -331,51 +331,57 @@ class _HomeViewState extends State<HomeView> {
                                             context: context,
                                             builder: (context) => AndroidErrorAlert(
                                                 errorMessage:
-                                                    'Please select your fuel type info. \n i.e: Petrol, 95 Unleaded'));
+                                                'Please select your fuel type info. \n i.e: Petrol, 95 Unleaded'));
                                       }
                                       if (selectedFuelType == 'petrol') {
+
+
                                         petrolRecordIndexGeneration();
                                         getPetrolData(
                                             recordIndex: selectedRecordIndex);
                                         //print('petrol record at selected index $selectedRecordIndex');
-                                        fuelPrice = petrolValue;
-                                        totalCost = (distance / consumption) *
-                                            fuelPrice;
-                                        totalCost = double.parse(
-                                            totalCost!.toStringAsFixed(2));
-                                        showModalBottomSheet(
-                                            context: context,
-                                            builder: buildBottomSheet);
-                                        Future.delayed(Duration(seconds: 2),
-                                            () {
+                                        //fuelPrice = petrolValue;
+
+                                        Future<void> updateDetails() async {
+                                          await Future.delayed(Duration(seconds: 1));
                                           setState(() {
-                                            fuelPrice;
-                                            print(
-                                                'The total PETROL cost is: R $totalCost');
+                                            fuelPrice = petrolValue;
+                                            totalCost = (distance / consumption) * fuelPrice;
+                                            totalCost = double.parse(
+                                                totalCost!.toStringAsFixed(2));
+                                            print('###FINAL fuel price => $fuelPrice and $petrolValue');
                                           });
-                                        });
+                                          showModalBottomSheet(
+                                            context: context,
+                                            builder: buildBottomSheet,
+                                          );
+                                        }
+                                        updateDetails();
+
+
                                         //print('selected record index: $selectedRecordIndex');
                                       } else if (selectedFuelType == 'diesel') {
                                         dieselRecordIndexGeneration();
                                         getDieselData(
                                             recordIndex: selectedRecordIndex);
 
-                                        totalCost = (distance / consumption) *
-                                            fuelPrice;
-                                        totalCost = double.parse(
-                                            totalCost!.toStringAsFixed(2));
-                                        showModalBottomSheet(
-                                            context: context,
-                                            builder: buildBottomSheet);
-                                        Future.delayed(Duration(seconds: 2),
-                                            () {
+                                        Future<void> updateDetails() async {
+                                          await Future.delayed(Duration(seconds: 1));
                                           setState(() {
-                                            fuelPrice = petrolValue;
-                                            print(
-                                                'The total DIESEL cost is: R $totalCost');
+                                            fuelPrice = dieselValue;
+                                            totalCost = (distance / consumption) * fuelPrice;
+                                            totalCost = double.parse(
+                                                totalCost!.toStringAsFixed(2));
+                                            print('###FINAL fuel price => $fuelPrice and 0000 $dieselValue 000000');
                                           });
-                                        });
-                                        //print('selected record index: $selectedRecordIndex');
+                                          showModalBottomSheet(
+                                            context: context,
+                                            builder: buildBottomSheet,
+                                          );
+                                        }
+                                        updateDetails();
+
+
                                       } else {
                                         print(
                                             'from_homeView => please select a fuel type (android)');
