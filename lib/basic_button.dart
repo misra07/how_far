@@ -13,6 +13,7 @@ class basicElevatedBTN extends StatelessWidget {
       style: ButtonStyle(
         minimumSize: MaterialStateProperty.all(Size(200.0, 50.0)),
         textStyle: MaterialStateProperty.all(TextStyle(fontSize: 24)),
+        backgroundColor: MaterialStatePropertyAll<Color>(Colors.cyan),
       ),
       onPressed: onPressed,
       child: Text(btnText),

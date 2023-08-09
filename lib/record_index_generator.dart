@@ -6,19 +6,19 @@ void petrolRecordIndexGeneration() {
   if (selectedLocation == 'Reef'){
     switch (selectedFuelGrade){
       case '93 unleaded':
-        selectedRecordIndex = 1;
+        selectedRecordIndex = 4;
         break;
       case '95 unleaded':
-        selectedRecordIndex = 4;
+        selectedRecordIndex = 1;
         break;
     }
   } else if (selectedLocation == 'Coast'){
     switch (selectedFuelGrade){
       case '93 unleaded':
-        selectedRecordIndex = 2;
+        selectedRecordIndex = 5;
         break;
       case '95 unleaded':
-        selectedRecordIndex = 5;
+        selectedRecordIndex = 2;
         break;
     }
   }

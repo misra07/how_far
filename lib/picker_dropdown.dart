@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';
+import 'home_view.dart';
 
 late String selectedLocation = 'Reef';
 String selectedFuelType = '';
@@ -37,7 +38,7 @@ Future<void> showLocationActionSheet(BuildContext context) async {
   } else {
     selectedLocation = 'Coast';
   }
-  //print(kLocationListIndex);
+
 }
 //1. iOS - location picker CupertinoPicker
 CupertinoPicker buildLocationCupertinoPicker() {
@@ -51,6 +52,10 @@ CupertinoPicker buildLocationCupertinoPicker() {
       kLocationListIndex = selectedIndex;
       locationCupertinoScrollController.dispose();
       locationCupertinoScrollController = FixedExtentScrollController(initialItem: kLocationListIndex);
+      locationSelectorLabel = ((kLocationList[kLocationListIndex] as Center).child as Text).data!;
+      print('the selected index is $kLocationListIndex from picker_dropdown $locationSelectorLabel');
+
+
     }, children: kLocationList,
   );
 }

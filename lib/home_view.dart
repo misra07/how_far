@@ -1,5 +1,6 @@
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
+import 'package:how_far/constants.dart';
 import 'package:how_far/showCalculationsSheet.dart';
 import 'alerts.dart';
 import 'constants.dart';
@@ -21,7 +22,9 @@ String platform =
 double distance = 00.00;
 double consumption = 00.00;
 double? totalCost;
-
+String locationSelectorLabel = ((kLocationList[kLocationListIndex] as Center).child as Text).data?? 'Reef';
+String fuelTypeSelectorLabel = ((kFuelTypeList[kFuelTypeListIndex] as Center).child as Text).data ?? 'petrol';
+String defaultFuelGradeSelectorLabel = ((kPetrolList[kFuelGradeListIndex] as Center).child as Text).data ?? ((kPetrolList[kFuelGradeListIndex] as Center).child as Text).data!;
 
 
 Widget buildBottomSheet(BuildContext context) => TotalResultsSheet();
@@ -39,6 +42,7 @@ class _HomeViewState extends State<HomeView> {
   }
 
 
+
   @override
   Widget build(BuildContext context) {
     if (selectedFuelType == 'petrol') {
@@ -46,6 +50,7 @@ class _HomeViewState extends State<HomeView> {
     } else if (selectedFuelType == 'diesel') {
       fuelPrice = dieselValue;
     }
+
 
     return Scaffold(
       body: Padding(
@@ -72,14 +77,22 @@ class _HomeViewState extends State<HomeView> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text('Location'),
-                                  //buildCupertinoPicker(),
                                   Visibility(
                                       visible: Platform.isIOS,
                                       child: basicElevatedBTN(
-                                          btnText: 'Location',
+                                          btnText: locationSelectorLabel,
+                                          //btnText: 'Misra',
                                           onPressed: () {
                                             showLocationActionSheet(context);
-                                          })),
+
+                                            setState(() {
+                                              locationSelectorLabel = ((kLocationList[kLocationListIndex] as Center).child as Text).data!;
+                                              print('Xxxxxxxx');
+                                            });
+                                          },
+
+
+                                      )),
                                   Visibility(
                                     visible: Platform.isAndroid,
                                     child: buildAndroidLocationDropdown(
@@ -103,9 +116,14 @@ class _HomeViewState extends State<HomeView> {
                                   Visibility(
                                       visible: Platform.isIOS,
                                       child: basicElevatedBTN(
-                                          btnText: 'Fuel Type',
+                                          btnText: fuelTypeSelectorLabel,
                                           onPressed: () {
                                             showFuelTypeActionSheet(context);
+                                            setState(() {
+                                              locationSelectorLabel = ((kLocationList[kLocationListIndex] as Center).child as Text).data!;
+                                              fuelTypeSelectorLabel = ((kFuelTypeList[kFuelTypeListIndex] as Center).child as Text).data!;
+
+                                            });
                                           })),
                                   Visibility(
                                     visible: Platform.isAndroid,
@@ -131,9 +149,14 @@ class _HomeViewState extends State<HomeView> {
                                   Visibility(
                                       visible: Platform.isIOS,
                                       child: basicElevatedBTN(
-                                        btnText: 'Octane',
+                                        btnText: selectedFuelGrade,
+                                        //btnText: 'petrol',
                                         onPressed: () {
                                           showPetrolTypeActionSheet(context);
+                                          setState(() {
+                                            fuelTypeSelectorLabel = ((kFuelTypeList[kFuelTypeListIndex] as Center).child as Text).data!;
+
+                                          });
                                         },
                                       )),
                                   Visibility(
@@ -197,8 +220,14 @@ class _HomeViewState extends State<HomeView> {
                                   TextField(
                                     keyboardType: TextInputType.number,
                                     onChanged: (value) {
-                                      print('DISTANCE: $value');
-                                      distance = double.parse(value);
+                                      try {
+                                        distance = double.parse(value);
+                                      } catch(e){
+                                        distance = 0.00;
+                                      }
+                                      setState(() {
+                                        defaultFuelGradeSelectorLabel;
+                                      });
                                     },
                                     decoration: InputDecoration(
                                       //labelText: distance.toString(),
@@ -224,8 +253,11 @@ class _HomeViewState extends State<HomeView> {
                                   TextField(
                                     keyboardType: TextInputType.number,
                                     onChanged: (value) {
-                                      print('CONSUMPTION $value');
-                                      consumption = double.parse(value);
+                                      try{
+                                        consumption = double.parse(value);
+                                      } catch (e){
+                                        consumption = 0.00;
+                                      }
                                     },
                                     decoration: InputDecoration(
                                       hintText: 'L/KM',
@@ -269,6 +301,7 @@ class _HomeViewState extends State<HomeView> {
                                         getPetrolData(
                                             recordIndex: selectedRecordIndex);
                                         //fuelPrice = petrolValue;
+                                        print('the selected area is $selectedLocation');
 
                                         Future<void> updateDetails() async {
                                           await Future.delayed(Duration(seconds: 1));
@@ -279,7 +312,7 @@ class _HomeViewState extends State<HomeView> {
                                                 fuelPrice;
                                             totalCost = double.parse(
                                                 totalCost!.toStringAsFixed(2));
-                                            print('###FINAL fuel price => $fuelPrice and $petrolValue');
+                                            print('###FINAL fuel price => $fuelPrice and $petrolValue \n and selected fuel grade is $selectedFuelGrade and petrol octane is $petrolOctane and record index $selectedRecordIndex');
                                           });
 
                                           showModalBottomSheet(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:how_far/picker_dropdown.dart';
 import 'display_fields.dart';
 import 'home_view.dart';
 
@@ -21,7 +22,7 @@ class TotalResultsSheet extends StatelessWidget {
         child: Center(
           //child: Text('$totalCost'),
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 50.0, horizontal: 10.0),
+            padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 10.0),
             child: Column(
               children: [
                 Text('Travel Details',
@@ -29,6 +30,60 @@ class TotalResultsSheet extends StatelessWidget {
                     fontSize: 30.0,
                     fontWeight: FontWeight.w700,
                   ),),
+                Divider(
+                  color: Colors.black, // Customize the color of the divider
+                  thickness: 1.0,      // Customize the thickness of the divider
+                  indent: 16.0,        // Customize the indent (empty space before the divider starts)
+                  endIndent: 16.0,     // Customize the end indent (empty space after the divider ends)
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Container(
+                        padding: const EdgeInsets.all(10.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
+                          color: Colors.amber,
+                        ),
+                        child: Text(selectedLocation.toUpperCase(),
+                          style: TextStyle(
+                              fontSize: 16.0
+                          ),),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Container(
+                        padding: const EdgeInsets.all(10.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
+                          color: Colors.amber,
+                        ),
+                        child: Text(selectedFuelType.toUpperCase(),
+                          style: TextStyle(
+                              fontSize: 16.0
+                          ),),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Container(
+                        padding: const EdgeInsets.all(10.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
+                          color: Colors.amber,
+                        ),
+                        child: Text(selectedFuelGrade.toUpperCase(),
+                          style: TextStyle(
+                              fontSize: 16.0
+                          ),),
+                      ),
+                    ),
+                  ],
+                ),
                 Divider(
                   color: Colors.black, // Customize the color of the divider
                   thickness: 1.0,      // Customize the thickness of the divider
