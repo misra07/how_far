@@ -1,6 +1,3 @@
-
-import 'package:flutter/cupertino.dart';
-import 'package:how_far/picker_dropdown.dart';
 import 'constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';

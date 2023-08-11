@@ -1,6 +1,4 @@
 import 'package:how_far/constants.dart';
-
-import 'home_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

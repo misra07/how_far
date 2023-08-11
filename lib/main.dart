@@ -3,7 +3,8 @@ import 'home_view.dart';
 
 void main() {
   runApp(
-    MaterialApp(home: HomeView(),
+    MaterialApp(
+      home: HomeView(),
     ),
   );
 }

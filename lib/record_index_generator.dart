@@ -3,7 +3,7 @@ import 'package:how_far/picker_dropdown.dart';
 late int selectedRecordIndex;
 
 void petrolRecordIndexGeneration() {
-  if (selectedLocation == 'Reef'){
+  if (selectedLocation == 'Inland'){
     switch (selectedFuelGrade){
       case '93 unleaded':
         selectedRecordIndex = 4;
@@ -26,7 +26,7 @@ void petrolRecordIndexGeneration() {
 
 //percentage 0.01 means 500PPM(0.05%)
 void dieselRecordIndexGeneration() {
-  if (selectedLocation == 'Reef'){
+  if (selectedLocation == 'Inland'){
     switch(selectedFuelGrade){
       case '50 PPM':
         selectedRecordIndex = 2;

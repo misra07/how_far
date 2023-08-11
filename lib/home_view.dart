@@ -2,8 +2,8 @@ import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:how_far/constants.dart';
 import 'package:how_far/showCalculationsSheet.dart';
+import 'package:how_far/texts.dart';
 import 'alerts.dart';
-import 'constants.dart';
 import 'fuel_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'picker_dropdown.dart';
@@ -22,9 +22,10 @@ String platform =
 double distance = 00.00;
 double consumption = 00.00;
 double? totalCost;
-String locationSelectorLabel = ((kLocationList[kLocationListIndex] as Center).child as Text).data?? 'Reef';
+String locationSelectorLabel = ((kLocationList[kLocationListIndex] as Center).child as Text).data?? 'Inland';
 String fuelTypeSelectorLabel = ((kFuelTypeList[kFuelTypeListIndex] as Center).child as Text).data ?? 'petrol';
 String defaultFuelGradeSelectorLabel = ((kPetrolList[kFuelGradeListIndex] as Center).child as Text).data ?? ((kPetrolList[kFuelGradeListIndex] as Center).child as Text).data!;
+String initialFuelGrade = '';
 
 
 Widget buildBottomSheet(BuildContext context) => TotalResultsSheet();
@@ -53,6 +54,7 @@ class _HomeViewState extends State<HomeView> {
 
 
     return Scaffold(
+      backgroundColor: kColorLightShade,
       body: Padding(
         padding: const EdgeInsets.fromLTRB(15.0, 30.0, 15.0, 15.0),
         child: SafeArea(
@@ -76,12 +78,11 @@ class _HomeViewState extends State<HomeView> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text('Location'),
+                                  basicText(text: 'Location', color: kColorDarkShade,),
                                   Visibility(
                                       visible: Platform.isIOS,
-                                      child: basicElevatedBTN(
+                                      child: infoElevatedBTN(
                                           btnText: locationSelectorLabel,
-                                          //btnText: 'Misra',
                                           onPressed: () {
                                             showLocationActionSheet(context);
 
@@ -112,10 +113,10 @@ class _HomeViewState extends State<HomeView> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text('Fuel Type'),
+                                  basicText(text: 'Fuel Type', color: kColorDarkShade,),
                                   Visibility(
                                       visible: Platform.isIOS,
-                                      child: basicElevatedBTN(
+                                      child: infoElevatedBTN(
                                           btnText: fuelTypeSelectorLabel,
                                           onPressed: () {
                                             showFuelTypeActionSheet(context);
@@ -145,12 +146,12 @@ class _HomeViewState extends State<HomeView> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text('Fuel Grade'),
+                                  basicText(text: 'Fuel Grade', color: kColorDarkShade,),
                                   Visibility(
                                       visible: Platform.isIOS,
-                                      child: basicElevatedBTN(
-                                        btnText: selectedFuelGrade,
-                                        //btnText: 'petrol',
+                                      child: infoElevatedBTN(
+                                        //btnText: selectedFuelGrade,
+                                        btnText: 'petrol',
                                         onPressed: () {
                                           showPetrolTypeActionSheet(context);
                                           setState(() {
@@ -179,7 +180,7 @@ class _HomeViewState extends State<HomeView> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text('Fuel Price'),
+                                  basicText(text: 'Fuel Price', color: kColorDarkShade,),
                                   Container(
                                     width: 200.0,
                                     height: 50.0,
@@ -216,7 +217,7 @@ class _HomeViewState extends State<HomeView> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text('Distance (km)'),
+                                  basicText(text: 'Distance', color: kColorDarkShade,),
                                   TextField(
                                     keyboardType: TextInputType.number,
                                     onChanged: (value) {
@@ -249,7 +250,7 @@ class _HomeViewState extends State<HomeView> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text('Consumption'),
+                                  basicText(text: 'Consumption', color: kColorDarkShade,),
                                   TextField(
                                     keyboardType: TextInputType.number,
                                     onChanged: (value) {
@@ -276,14 +277,14 @@ class _HomeViewState extends State<HomeView> {
                         Row(
                           children: [
                             Expanded(
-                              child: basicElevatedBTN(
+                              child: primaryElevatedBTN(
                                   btnText: 'Calculate',
                                   onPressed: () {
                                     //iOS
                                     if (Platform.isIOS == true) {
                                       try {
                                         selectedFuelType;
-                                        selectedFuelGrade;
+                                        selectedFuelGrade != 'notSet';
                                         canGetFuelData = true;
                                       } catch (e) {
                                         print(
@@ -434,3 +435,4 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 }
+

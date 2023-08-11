@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'constants.dart';
 import 'home_view.dart';
 
-late String selectedLocation = 'Reef';
+late String selectedLocation = 'Inland';
 String selectedFuelType = '';
 late String selectedFuelGrade;
 
@@ -34,7 +34,7 @@ Future<void> showLocationActionSheet(BuildContext context) async {
   //print('final selected location index is $kLocationListIndex');
   kLocationListIndex;
   if (kLocationListIndex == 0){
-    selectedLocation = 'Reef';
+    selectedLocation = 'Inland';
   } else {
     selectedLocation = 'Coast';
   }
@@ -45,7 +45,7 @@ CupertinoPicker buildLocationCupertinoPicker() {
   return CupertinoPicker(
     scrollController: locationCupertinoScrollController,
     selectionOverlay: CupertinoPickerDefaultSelectionOverlay(
-      background: Colors.lightBlueAccent.withOpacity(0.3),
+      background: kColorDarkAccent.withOpacity(0.6),
     ),
     itemExtent: 50,
     onSelectedItemChanged: (selectedIndex){
@@ -89,7 +89,7 @@ CupertinoPicker buildFuelTypeCupertinoPicker() {
   return CupertinoPicker(
     scrollController: fuelTypeCupertinoScrollController,
     selectionOverlay: CupertinoPickerDefaultSelectionOverlay(
-      background: Colors.lightBlueAccent.withOpacity(0.3),
+      background: kColorDarkAccent.withOpacity(0.6),
     ),
     itemExtent: 50.0,
     onSelectedItemChanged: (selectedIndex){
@@ -150,7 +150,7 @@ CupertinoPicker buildPetrolCupertinoPicker() {
   return CupertinoPicker(
     scrollController: petrolCupertinoScrollController,
     selectionOverlay: CupertinoPickerDefaultSelectionOverlay(
-      background: Colors.lightBlueAccent.withOpacity(0.3),
+      background: kColorDarkAccent.withOpacity(0.6),
     ),
     itemExtent: 50.0,
     onSelectedItemChanged: (selectedIndex){

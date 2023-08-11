@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:how_far/constants.dart';
 import 'package:how_far/picker_dropdown.dart';
 import 'display_fields.dart';
 import 'home_view.dart';
@@ -13,7 +14,7 @@ class TotalResultsSheet extends StatelessWidget {
       color: Color(0xff737373),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: kColorLightShade,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20.0),
             topRight: Radius.circular(20.0),
@@ -29,9 +30,10 @@ class TotalResultsSheet extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 30.0,
                     fontWeight: FontWeight.w700,
+                    color: kColorDarkShade,
                   ),),
                 Divider(
-                  color: Colors.black, // Customize the color of the divider
+                  color: kColorBlack, // Customize the color of the divider
                   thickness: 1.0,      // Customize the thickness of the divider
                   indent: 16.0,        // Customize the indent (empty space before the divider starts)
                   endIndent: 16.0,     // Customize the end indent (empty space after the divider ends)
@@ -43,57 +45,61 @@ class TotalResultsSheet extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: Container(
-                        padding: const EdgeInsets.all(10.0),
+                        padding: const EdgeInsets.all(13.0),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                          color: Colors.amber,
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: kColorDarkAccent,
                         ),
                         child: Text(selectedLocation.toUpperCase(),
                           style: TextStyle(
-                              fontSize: 16.0
+                              fontSize: 20.0,
+                            color: kColorWhite,
                           ),),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: Container(
-                        padding: const EdgeInsets.all(10.0),
+                        padding: const EdgeInsets.all(13.0),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                          color: Colors.amber,
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: kColorDarkAccent,
                         ),
                         child: Text(selectedFuelType.toUpperCase(),
                           style: TextStyle(
-                              fontSize: 16.0
+                              fontSize: 20.0,
+                            color: kColorWhite,
                           ),),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: Container(
-                        padding: const EdgeInsets.all(10.0),
+                        padding: const EdgeInsets.all(13.0),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                          color: Colors.amber,
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: kColorDarkAccent,
                         ),
-                        child: Text(selectedFuelGrade.toUpperCase(),
+                        child: Text(selectedFuelGrade.replaceAll('unleaded', 'ULP').toUpperCase(),
                           style: TextStyle(
-                              fontSize: 16.0
+                              fontSize: 20.0,
+                            color: kColorWhite,
                           ),),
                       ),
                     ),
                   ],
                 ),
                 Divider(
-                  color: Colors.black, // Customize the color of the divider
+                  color: kColorBlack, // Customize the color of the divider
                   thickness: 1.0,      // Customize the thickness of the divider
                   indent: 16.0,        // Customize the indent (empty space before the divider starts)
                   endIndent: 16.0,     // Customize the end indent (empty space after the divider ends)
                 ),
                 SizedBox(height: 10.0),
-                Text('R $fuelPrice per Liter',
+                Text('R $fuelPrice / Liter',
                   style: TextStyle(
                     fontSize: 25.0,
+                    color: kColorBlackFancy,
                   ),
                 ),
                 Padding(
@@ -111,7 +117,6 @@ class TotalResultsSheet extends StatelessWidget {
                 ),
                 SizedBox(),
                 Container(
-                  color: Colors.amber[200],
                 )
               ],
 
@@ -133,8 +138,8 @@ class TravelDetailsItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          color: Colors.redAccent[100],
+      decoration: const BoxDecoration(
+          color: kColorLightAccent,
           borderRadius: BorderRadius.all(Radius.circular(10.0))
       ),
       child: Column(
