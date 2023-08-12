@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:how_far/constants.dart';
 
 
 
@@ -6,8 +7,8 @@ Text buildMainDisplayText({required String enteredText}) {
 
   return Text(enteredText,
       style: TextStyle(
-        fontSize: 30.0,
-        color: Colors.black54,
+        fontSize: 20.0,
+        color: kColorBlackFancy,
       )
   );
 }
@@ -15,8 +16,8 @@ Text buildMainDisplayText({required String enteredText}) {
 Text buildSecondaryDisplayTextBold({required String enteredText}) {
   return Text(enteredText,
     style: TextStyle(
-        fontSize: 20.0,
-        color: Colors.black54,
+        fontSize: 15.0,
+        color: kColorBlackFancy,
         fontWeight: FontWeight.w900,
     ),
   );
@@ -26,7 +27,7 @@ Text buildSecondaryDisplayText({required String enteredText}) {
   return Text(enteredText,
     style: TextStyle(
       fontSize: 20.0,
-      color: Colors.black45,
+      color: kColorBlackFancy,
     ),
   );
 }

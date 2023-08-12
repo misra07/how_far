@@ -9,7 +9,6 @@ class TotalResultsSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('bottom sheet raised');
     return Container(
       color: Color(0xff737373),
       child: Container(
@@ -23,12 +22,12 @@ class TotalResultsSheet extends StatelessWidget {
         child: Center(
           //child: Text('$totalCost'),
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 10.0),
+            padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
             child: Column(
               children: [
                 Text('Travel Details',
                   style: TextStyle(
-                    fontSize: 30.0,
+                    fontSize: 25.0,
                     fontWeight: FontWeight.w700,
                     color: kColorDarkShade,
                   ),),
@@ -52,7 +51,7 @@ class TotalResultsSheet extends StatelessWidget {
                         ),
                         child: Text(selectedLocation.toUpperCase(),
                           style: TextStyle(
-                              fontSize: 20.0,
+                              fontSize: 15.0,
                             color: kColorWhite,
                           ),),
                       ),
@@ -67,7 +66,7 @@ class TotalResultsSheet extends StatelessWidget {
                         ),
                         child: Text(selectedFuelType.toUpperCase(),
                           style: TextStyle(
-                              fontSize: 20.0,
+                              fontSize: 15.0,
                             color: kColorWhite,
                           ),),
                       ),
@@ -82,7 +81,7 @@ class TotalResultsSheet extends StatelessWidget {
                         ),
                         child: Text(selectedFuelGrade.replaceAll('unleaded', 'ULP').toUpperCase(),
                           style: TextStyle(
-                              fontSize: 20.0,
+                              fontSize: 15.0,
                             color: kColorWhite,
                           ),),
                       ),
@@ -106,11 +105,11 @@ class TotalResultsSheet extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 10.0),
                   child: Column(
                     children: [
-                      SizedBox(height: 15.0),
+                      SizedBox(height: 10.0),
                       TravelDetailsItem(title: 'Distance', text1: '$distance', text2: 'KM'),
-                      SizedBox(height: 15.0),
+                      SizedBox(height: 10.0),
                       TravelDetailsItem(title: 'AVG Consumption', text1: '$consumption', text2: 'KM/L'),
-                      SizedBox(height: 15.0),
+                      SizedBox(height: 10.0),
                       TravelDetailsItem(title: 'Travel Cost', text1: 'R ', text2: '$totalCost'),
                     ],
                   ),

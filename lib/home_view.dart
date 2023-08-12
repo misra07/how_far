@@ -24,8 +24,14 @@ double consumption = 00.00;
 double? totalCost;
 String locationSelectorLabel = ((kLocationList[kLocationListIndex] as Center).child as Text).data?? 'Inland';
 String fuelTypeSelectorLabel = ((kFuelTypeList[kFuelTypeListIndex] as Center).child as Text).data ?? 'petrol';
-String defaultFuelGradeSelectorLabel = ((kPetrolList[kFuelGradeListIndex] as Center).child as Text).data ?? ((kPetrolList[kFuelGradeListIndex] as Center).child as Text).data!;
+String defaultFuelGradeSelectorLabel = ((kPetrolList[kFuelGradeListIndex] as Center).child as Text).data ?? ((kDieselList[kFuelGradeListIndex] as Center).child as Text).data!;
 String initialFuelGrade = '';
+
+void updateFields(){
+  if (selectedRecordIndex == 999){
+    selectedRecordIndex = 4;
+  }
+}
 
 
 Widget buildBottomSheet(BuildContext context) => TotalResultsSheet();
@@ -40,6 +46,11 @@ class _HomeViewState extends State<HomeView> {
         FixedExtentScrollController(initialItem: kFuelTypeListIndex);
     petrolCupertinoScrollController =
         FixedExtentScrollController(initialItem: kFuelGradeListIndex);
+
+    // setState(() {
+    //   selectedRecordIndex;
+    //   locationSelectorLabel;
+    // });
   }
 
 
@@ -119,6 +130,7 @@ class _HomeViewState extends State<HomeView> {
                                       child: infoElevatedBTN(
                                           btnText: fuelTypeSelectorLabel,
                                           onPressed: () {
+
                                             showFuelTypeActionSheet(context);
                                             setState(() {
                                               locationSelectorLabel = ((kLocationList[kLocationListIndex] as Center).child as Text).data!;
@@ -150,12 +162,15 @@ class _HomeViewState extends State<HomeView> {
                                   Visibility(
                                       visible: Platform.isIOS,
                                       child: infoElevatedBTN(
-                                        //btnText: selectedFuelGrade,
-                                        btnText: 'petrol',
+                                        btnText: defaultFuelGradeSelectorLabel,
                                         onPressed: () {
-                                          showPetrolTypeActionSheet(context);
+                                          showFuelGradeActionSheet(context);
+                                          print('xOXOO  $selectedFuelType');
+                                          print('shhhshhshshshsh ${((kFuelTypeList[kFuelTypeListIndex] as Center).child as Text).data }');
                                           setState(() {
+
                                             fuelTypeSelectorLabel = ((kFuelTypeList[kFuelTypeListIndex] as Center).child as Text).data!;
+                                            //print('$selectedRecordIndex');
 
                                           });
                                         },
@@ -186,25 +201,28 @@ class _HomeViewState extends State<HomeView> {
                                     height: 50.0,
                                     decoration: BoxDecoration(
                                       border: Border.all(
-                                        color: Colors.grey,
+                                        color: kBtnColorDefault,
                                         width: 1,
                                       ),
                                       borderRadius: BorderRadius.circular(5),
                                     ),
-                                    child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 20),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            buildMainDisplayText(
-                                                enteredText: 'R '),
-                                            buildMainDisplayText(
-                                                enteredText:
-                                                fuelPrice.toString()),
-                                          ],
-                                        )),
+                                    child: Container(
+                                      color: kColorLightAccent,
+                                      child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 20),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              buildMainDisplayText(
+                                                  enteredText: 'R '),
+                                              buildMainDisplayText(
+                                                  enteredText:
+                                                  fuelPrice.toString()),
+                                            ],
+                                          )),
+                                    ),
                                   )
                                 ],
                               ),
@@ -227,7 +245,9 @@ class _HomeViewState extends State<HomeView> {
                                         distance = 0.00;
                                       }
                                       setState(() {
-                                        defaultFuelGradeSelectorLabel;
+                                        defaultFuelGradeSelectorLabel = selectedFuelGrade;
+                                        //defaultFuelGradeSelectorLabel = ((kPetrolList[kFuelGradeListIndex] as Center).child as Text).data ?? ((kDieselList[kFuelGradeListIndex] as Center).child as Text).data!;
+                                        print('DISTANCE!!!! $defaultFuelGradeSelectorLabel');
                                       });
                                     },
                                     decoration: InputDecoration(
@@ -261,7 +281,7 @@ class _HomeViewState extends State<HomeView> {
                                       }
                                     },
                                     decoration: InputDecoration(
-                                      hintText: 'L/KM',
+                                      hintText: 'L/100km',
                                       border: OutlineInputBorder(),
                                     ),
                                     style: TextStyle(
@@ -279,51 +299,39 @@ class _HomeViewState extends State<HomeView> {
                             Expanded(
                               child: primaryElevatedBTN(
                                   btnText: 'Calculate',
-                                  onPressed: () {
-                                    //iOS
+                                  onPressed: () async {
+
+                                    selectedRecordIndex == 999 ? selectedRecordIndex = 4: selectedRecordIndex =4;
+
+
+
+
+
                                     if (Platform.isIOS == true) {
-                                      try {
-                                        selectedFuelType;
-                                        selectedFuelGrade != 'notSet';
-                                        canGetFuelData = true;
-                                      } catch (e) {
-                                        print(
-                                            'Please select a fuel type (iOS): $e');
-                                        canGetFuelData = false;
-                                        showCupertinoDialog(
-                                            context: context,
-                                            builder: (context) => iOSErrorAlert(
-                                                errorMessage:
-                                                'Please select your fuel type info. \n i.e: Petrol, 95 Unleaded'));
-                                      }
-                                      if (selectedFuelType == 'petrol' &&
-                                          canGetFuelData == true) {
+
+
+                                    //iOS
+                                      if (selectedFuelType == 'petrol') {
                                         petrolRecordIndexGeneration();
-                                        getPetrolData(
-                                            recordIndex: selectedRecordIndex);
-                                        //fuelPrice = petrolValue;
-                                        print('the selected area is $selectedLocation');
+                                        getPetrolData(recordIndex: selectedRecordIndex);
+
 
                                         Future<void> updateDetails() async {
                                           await Future.delayed(Duration(seconds: 1));
-
                                           setState(() {
-                                            fuelPrice = petrolValue;
+                                            fuelPrice = dieselValue;
                                             totalCost = (distance / consumption) *
                                                 fuelPrice;
                                             totalCost = double.parse(
                                                 totalCost!.toStringAsFixed(2));
-                                            print('###FINAL fuel price => $fuelPrice and $petrolValue \n and selected fuel grade is $selectedFuelGrade and petrol octane is $petrolOctane and record index $selectedRecordIndex');
+                                            print('###FINAL fuel price => $fuelPrice and 000000 $petrolValue 000000');
                                           });
-
                                           showModalBottomSheet(
                                             context: context,
                                             builder: buildBottomSheet,
                                           );
                                         }
                                         updateDetails();
-
-                                        //var totalCost = (distance/consumption)*fuelPrice;
                                       } else if (selectedFuelType == 'diesel') {
                                         dieselRecordIndexGeneration();
                                         getDieselData(
@@ -347,8 +355,7 @@ class _HomeViewState extends State<HomeView> {
                                         updateDetails();
 
                                       } else {
-                                        print(
-                                            'from_homeView => please select a fuel type (ios)');
+                                        print('from_homeView => please select a fuel type (ios) $selectedFuelType the price is $fuelPrice');
                                       }
                                     }
                                     //android
@@ -356,11 +363,11 @@ class _HomeViewState extends State<HomeView> {
                                       try {
                                         selectedFuelType;
                                         selectedFuelGrade;
-                                        canGetFuelData = true;
+                                        canCalculateCost = true;
                                       } catch (e) {
                                         print(
                                             'Please select a fuel type (Android): $e');
-                                        canGetFuelData = false;
+                                        canCalculateCost = false;
                                         showDialog(
                                             context: context,
                                             builder: (context) => AndroidErrorAlert(

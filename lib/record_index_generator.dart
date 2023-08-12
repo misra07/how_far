@@ -1,6 +1,6 @@
 import 'package:how_far/picker_dropdown.dart';
 
-late int selectedRecordIndex;
+int selectedRecordIndex = 999;
 
 void petrolRecordIndexGeneration() {
   if (selectedLocation == 'Inland'){

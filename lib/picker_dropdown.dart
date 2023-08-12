@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'constants.dart';
 import 'home_view.dart';
 
-late String selectedLocation = 'Inland';
+String selectedLocation = 'Inland';
 String selectedFuelType = '';
-late String selectedFuelGrade;
+String selectedFuelGrade = 'none';
 
 //iOS button pickers
 var locationCupertinoScrollController = FixedExtentScrollController(initialItem: kLocationListIndex);
@@ -102,7 +102,7 @@ CupertinoPicker buildFuelTypeCupertinoPicker() {
 }
 
 //3. iOS - fuel grade picker Modal (petrol + diesel)
-Future<void> showPetrolTypeActionSheet (BuildContext context) async {
+Future<void> showFuelGradeActionSheet (BuildContext context) async {
   await showCupertinoModalPopup(
     context: context,
     builder: (context)=>CupertinoActionSheet(
@@ -171,6 +171,8 @@ Widget buildAndroidLocationDropdown({required Function updateValueAndUI}) {
 
   return DropdownButton<String>(
     value: selectedLocation,
+    style: TextStyle(color: kColorBlackFancy, fontSize: 20.0),
+    dropdownColor: kColorLightAccent,
     items: loopThroughLocationList(),
     onChanged: (value) {
       selectedLocation = value!;
@@ -202,6 +204,8 @@ DropdownButton<String> buildAndroidFuelTypeDropdown({required Function updateVal
 
     value: selectedFuelType.isEmpty? 'petrol': selectedFuelType,
     items: loopThroughFuelTypeList(),
+    style: TextStyle(color: kColorBlackFancy, fontSize: 20.0),
+    dropdownColor: kColorLightAccent,
     onChanged: (value){
       selectedFuelType = value!;
       updateValueAndUI();
@@ -236,6 +240,8 @@ DropdownButton<String> buildAndroidFuelGradeDropdown({required Function updateiO
   return DropdownButton<String>(
     value: selectedFuelType == 'petrol'? ((kPetrolList[fuelGradeIndex] as Center).child as Text).data: ((kDieselList[fuelGradeIndex] as Center).child as Text).data,
     items: selectedFuelType == 'petrol'? loopThroughPetrolList(): loopThroughDieselList(),
+    style: TextStyle(color: kColorBlackFancy, fontSize: 20.0),
+    dropdownColor: kColorLightAccent,
     onChanged: (value){
       selectedFuelGrade = value!;
       if(selectedFuelType == 'petrol'){
