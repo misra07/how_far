@@ -302,24 +302,18 @@ class _HomeViewState extends State<HomeView> {
                                   onPressed: () async {
 
                                     selectedRecordIndex == 999 ? selectedRecordIndex = 4: selectedRecordIndex =4;
-
-
-
-
-
+                                    defaultFuelGradeSelectorLabel = selectedFuelGrade;
                                     if (Platform.isIOS == true) {
-
 
                                     //iOS
                                       if (selectedFuelType == 'petrol') {
                                         petrolRecordIndexGeneration();
                                         getPetrolData(recordIndex: selectedRecordIndex);
 
-
                                         Future<void> updateDetails() async {
                                           await Future.delayed(Duration(seconds: 1));
                                           setState(() {
-                                            fuelPrice = dieselValue;
+                                            fuelPrice = petrolValue;
                                             totalCost = (distance / consumption) *
                                                 fuelPrice;
                                             totalCost = double.parse(
@@ -360,22 +354,21 @@ class _HomeViewState extends State<HomeView> {
                                     }
                                     //android
                                     else {
-                                      try {
-                                        selectedFuelType;
-                                        selectedFuelGrade;
-                                        canCalculateCost = true;
-                                      } catch (e) {
-                                        print(
-                                            'Please select a fuel type (Android): $e');
-                                        canCalculateCost = false;
-                                        showDialog(
-                                            context: context,
-                                            builder: (context) => AndroidErrorAlert(
-                                                errorMessage:
-                                                'Please select your fuel type info. \n i.e: Petrol, 95 Unleaded'));
-                                      }
+                                      // try {
+                                      //   selectedFuelType;
+                                      //   selectedFuelGrade;
+                                      //   canCalculateCost = true;
+                                      // } catch (e) {
+                                      //   print(
+                                      //       'Please select a fuel type (Android): $e');
+                                      //   canCalculateCost = false;
+                                      //   showDialog(
+                                      //       context: context,
+                                      //       builder: (context) => AndroidErrorAlert(
+                                      //           errorMessage:
+                                      //           'Please select your fuel type info. \n i.e: Petrol, 95 Unleaded'));
+                                      // }
                                       if (selectedFuelType == 'petrol') {
-
 
                                         petrolRecordIndexGeneration();
                                         getPetrolData(

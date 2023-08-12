@@ -2,7 +2,6 @@ import 'constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'home_view.dart';
-//import 'package:flutter_network_connectivity/flutter_network_connectivity.dart';
 
 late String petrolLocation;
 late String petrolOctane ;
@@ -11,13 +10,6 @@ double petrolValue = 00;
 bool canCalculateCost = true;
 late http.Response response;
 bool canGetFuelData = false;
-//
-// FlutterNetworkConnectivity networkAvailability =
-// FlutterNetworkConnectivity(
-//   isContinousLookUp: false,  // optional, false if you cont want continous lookup
-//   lookUpDuration: const Duration(seconds: 5),  // optional, to override default lookup duration
-//   lookUpUrl: 'google.com',  // optional, to override default lookup url
-// );
 
 
 
@@ -26,13 +18,15 @@ void getPetrolData({required int recordIndex}) async {
 
   response = await http.get(kFSAUrl, headers: {'Key': kFSAkey});
 
-  if (response.statusCode == 200 && canGetFuelData == true){
+  if (response.statusCode == 200){
     String fullResponse = response.body;
     petrolLocation = jsonDecode(fullResponse)['petrol'][recordIndex]['location'];
     petrolOctane = jsonDecode(fullResponse)['petrol'][recordIndex]['octane'];
     petrolType = jsonDecode(fullResponse)['petrol'][recordIndex]['type'];
     petrolValue = jsonDecode(fullResponse)['petrol'][recordIndex]['value']/100;
     //canCalculateCost = true;
+    print(' the record is $recordIndex');
+    print(response.body);
 
     //print('from getPetrolData $petrolLocation, $petrolOctane $petrolType, $petrolValue');
     //print('####### $petrolValue');

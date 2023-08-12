@@ -3,7 +3,7 @@ import 'package:how_far/picker_dropdown.dart';
 int selectedRecordIndex = 999;
 
 void petrolRecordIndexGeneration() {
-  if (selectedLocation == 'Inland'){
+  if (selectedLocation == 'Coast'){
     switch (selectedFuelGrade){
       case '93 unleaded':
         selectedRecordIndex = 4;
@@ -12,13 +12,13 @@ void petrolRecordIndexGeneration() {
         selectedRecordIndex = 1;
         break;
     }
-  } else if (selectedLocation == 'Coast'){
+  } else if (selectedLocation == 'Inland'){
     switch (selectedFuelGrade){
       case '93 unleaded':
-        selectedRecordIndex = 5;
+        selectedRecordIndex = 3;
         break;
       case '95 unleaded':
-        selectedRecordIndex = 2;
+        selectedRecordIndex = 0;
         break;
     }
   }
