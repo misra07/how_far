@@ -1,10 +1,10 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:how_far/picker_dropdown.dart';
-import 'package:how_far/record_index_generator.dart';
-import 'fuel_data.dart';
-import 'home_view.dart';
+import 'package:how_far/controller/picker_dropdown.dart';
+import 'package:how_far/model/record_index_generator.dart';
+import '../model/fuel_data.dart';
+import '../view/home_view.dart';
 import 'dart:io' show Platform;
 
 //CURRENTLY NOT IN USE
@@ -20,7 +20,7 @@ class _RunCalculationsState extends State<RunCalculations> {
         petrolRecordIndexGeneration();
         getPetrolData(recordIndex: selectedRecordIndex);
         void updateLabelLater() {
-          Future.delayed(Duration(seconds: 2), () {
+          Future.delayed(const Duration(seconds: 2), () {
             setState(() {
               fuelPrice = petrolValue;
             });
@@ -31,7 +31,7 @@ class _RunCalculationsState extends State<RunCalculations> {
         dieselRecordIndexGeneration();
         getDieselData(recordIndex: selectedRecordIndex);
         void updateLabelLater() {
-          Future.delayed(Duration(seconds: 3), () {
+          Future.delayed(const Duration(seconds: 3), () {
             setState(() {
               fuelPrice = dieselValue;
             });
@@ -39,7 +39,7 @@ class _RunCalculationsState extends State<RunCalculations> {
         }
         updateLabelLater();
       } else {
-        print('from_homeView => please select a fuel type (ios)');
+        //print('from_homeView => please select a fuel type (ios)');
       }
     }
   }
@@ -47,6 +47,6 @@ class _RunCalculationsState extends State<RunCalculations> {
   @override
   Widget build(BuildContext context) {
     iOSCalculate();
-    return Scaffold();
+    return const Scaffold();
   }
 }

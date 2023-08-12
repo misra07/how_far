@@ -1,4 +1,4 @@
-import 'package:how_far/constants.dart';
+import 'package:how_far/model/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -15,11 +15,11 @@ AndroidErrorAlert({required this.errorMessage});
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text('Close'),
+          child: const Text('Close'),
         )
       ],
-      title: Text('Error'),
-      contentPadding: EdgeInsets.all(20.0),
+      title: const Text('Error'),
+      contentPadding: const EdgeInsets.all(20.0),
       content: Text(errorMessage),
       elevation: kDefaultElevation,
     );
@@ -27,9 +27,9 @@ AndroidErrorAlert({required this.errorMessage});
 }
 
 
-class iOSErrorAlert extends StatelessWidget {
+class IosErrorAlert extends StatelessWidget {
   final String errorMessage;
-  iOSErrorAlert({required this.errorMessage});
+  IosErrorAlert({required this.errorMessage});
 
   @override
   Widget build(BuildContext context) {
@@ -46,11 +46,11 @@ class iOSErrorAlert extends StatelessWidget {
         ),
         Center(
           child: CupertinoAlertDialog(
-            title: Text('Error'),
+            title: const Text('Error'),
             content: Text(errorMessage),
             actions: [
               CupertinoDialogAction(
-                child: Text('Close'),
+                child: const Text('Close'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:how_far/colors.dart';
+import 'package:how_far/model/colors.dart';
 
 @immutable
 class AppTheme{
@@ -11,8 +11,8 @@ class AppTheme{
   static ThemeData define(){
     return ThemeData (
         fontFamily: 'SFRegular',
-        primaryColor: Color(0xff9C8898),
-    focusColor: Color(0xffB9475F),
+        primaryColor: const Color(0xff9C8898),
+    focusColor: const Color(0xffB9475F),
 
     //lightShadeColor: Color(0xffF7F8F7);
     // lightAccentColor: Color(0xffA4C3CE);

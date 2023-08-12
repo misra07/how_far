@@ -1,7 +1,7 @@
 import 'constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'home_view.dart';
+import '../view/home_view.dart';
 
 late String petrolLocation;
 late String petrolOctane ;
@@ -25,8 +25,8 @@ void getPetrolData({required int recordIndex}) async {
     petrolType = jsonDecode(fullResponse)['petrol'][recordIndex]['type'];
     petrolValue = jsonDecode(fullResponse)['petrol'][recordIndex]['value']/100;
     //canCalculateCost = true;
-    print(' the record is $recordIndex');
-    print(response.body);
+    //print(' the record is $recordIndex');
+    //print(response.body);
 
     //print('from getPetrolData $petrolLocation, $petrolOctane $petrolType, $petrolValue');
     //print('####### $petrolValue');
@@ -51,7 +51,7 @@ void getDieselData({required int recordIndex}) async {
   dieselPPM = jsonDecode(fullResponse)['diesel'][recordIndex]['percentage'];
   dieselValue = jsonDecode(fullResponse)['diesel'][recordIndex]['value']/100;
 
-  print('from getDieselData diesel location: $dieselLocation, diesel percentage: $dieselPPM, diesel value: $dieselValue');
+  //print('from getDieselData diesel location: $dieselLocation, diesel percentage: $dieselPPM, diesel value: $dieselValue');
 }
 
 

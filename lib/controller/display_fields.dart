@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:how_far/constants.dart';
+import 'package:how_far/model/constants.dart';
 
 
 
 Text buildMainDisplayText({required String enteredText}) {
 
   return Text(enteredText,
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 20.0,
         color: kColorBlackFancy,
       )
@@ -15,7 +15,7 @@ Text buildMainDisplayText({required String enteredText}) {
 
 Text buildSecondaryDisplayTextBold({required String enteredText}) {
   return Text(enteredText,
-    style: TextStyle(
+    style: const TextStyle(
         fontSize: 15.0,
         color: kColorBlackFancy,
         fontWeight: FontWeight.w900,
@@ -25,7 +25,7 @@ Text buildSecondaryDisplayTextBold({required String enteredText}) {
 
 Text buildSecondaryDisplayText({required String enteredText}) {
   return Text(enteredText,
-    style: TextStyle(
+    style: const TextStyle(
       fontSize: 20.0,
       color: kColorBlackFancy,
     ),

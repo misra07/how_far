@@ -1,15 +1,15 @@
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
-import 'package:how_far/constants.dart';
-import 'package:how_far/showCalculationsSheet.dart';
-import 'package:how_far/texts.dart';
+import 'package:how_far/model/constants.dart';
+import 'package:how_far/controller/showCalculationsSheet.dart';
+import 'package:how_far/model/texts.dart';
 import 'alerts.dart';
-import 'fuel_data.dart';
+import '../model/fuel_data.dart';
 import 'package:flutter/cupertino.dart';
-import 'picker_dropdown.dart';
+import '../controller/picker_dropdown.dart';
 import 'basic_button.dart';
-import 'record_index_generator.dart';
-import 'display_fields.dart';
+import '../model/record_index_generator.dart';
+import '../controller/display_fields.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -34,7 +34,7 @@ void updateFields(){
 }
 
 
-Widget buildBottomSheet(BuildContext context) => TotalResultsSheet();
+Widget buildBottomSheet(BuildContext context) => const TotalResultsSheet();
 
 class _HomeViewState extends State<HomeView> {
   @override
@@ -71,7 +71,7 @@ class _HomeViewState extends State<HomeView> {
         child: SafeArea(
           child: Column(
             children: [
-              CircleAvatar(
+              const CircleAvatar(
                 radius: 50.0,
                 //backgroundColor: Colors.red,
                 backgroundImage: AssetImage('assets/howfarLogo.png'),
@@ -79,7 +79,7 @@ class _HomeViewState extends State<HomeView> {
               const SizedBox(height: 20.0),
               Expanded(
                 child: Padding(
-                    padding: EdgeInsets.all(5.0),
+                    padding: const EdgeInsets.all(5.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -99,7 +99,7 @@ class _HomeViewState extends State<HomeView> {
 
                                             setState(() {
                                               locationSelectorLabel = ((kLocationList[kLocationListIndex] as Center).child as Text).data!;
-                                              print('Xxxxxxxx');
+
                                             });
                                           },
 
@@ -117,7 +117,7 @@ class _HomeViewState extends State<HomeView> {
                                 ],
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20.0,
                             ),
                             Expanded(
@@ -165,8 +165,7 @@ class _HomeViewState extends State<HomeView> {
                                         btnText: defaultFuelGradeSelectorLabel,
                                         onPressed: () {
                                           showFuelGradeActionSheet(context);
-                                          print('xOXOO  $selectedFuelType');
-                                          print('shhhshhshshshsh ${((kFuelTypeList[kFuelTypeListIndex] as Center).child as Text).data }');
+
                                           setState(() {
 
                                             fuelTypeSelectorLabel = ((kFuelTypeList[kFuelTypeListIndex] as Center).child as Text).data!;
@@ -181,14 +180,12 @@ class _HomeViewState extends State<HomeView> {
                                           updateiOSValueAndUI: () {
                                             setState(() {
                                               selectedFuelGrade;
-                                              print(
-                                                  'supposed to upgrade $selectedFuelGrade');
                                             });
                                           }))
                                 ],
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20.0,
                             ),
                             Expanded(
@@ -209,7 +206,7 @@ class _HomeViewState extends State<HomeView> {
                                     child: Container(
                                       color: kColorLightAccent,
                                       child: Padding(
-                                          padding: EdgeInsets.symmetric(
+                                          padding: const EdgeInsets.symmetric(
                                               horizontal: 20),
                                           child: Row(
                                             mainAxisAlignment:
@@ -247,15 +244,15 @@ class _HomeViewState extends State<HomeView> {
                                       setState(() {
                                         defaultFuelGradeSelectorLabel = selectedFuelGrade;
                                         //defaultFuelGradeSelectorLabel = ((kPetrolList[kFuelGradeListIndex] as Center).child as Text).data ?? ((kDieselList[kFuelGradeListIndex] as Center).child as Text).data!;
-                                        print('DISTANCE!!!! $defaultFuelGradeSelectorLabel');
+
                                       });
                                     },
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                       //labelText: distance.toString(),
                                       hintText: 'KM',
                                       border: OutlineInputBorder(),
                                     ),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 30.0,
                                       color: Colors.black54,
                                     ),
@@ -280,11 +277,11 @@ class _HomeViewState extends State<HomeView> {
                                         consumption = 0.00;
                                       }
                                     },
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                       hintText: 'L/100km',
                                       border: OutlineInputBorder(),
                                     ),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 30.0,
                                       color: Colors.black54,
                                     ),
@@ -303,22 +300,47 @@ class _HomeViewState extends State<HomeView> {
 
                                     selectedRecordIndex == 999 ? selectedRecordIndex = 4: selectedRecordIndex =4;
                                     defaultFuelGradeSelectorLabel = selectedFuelGrade;
+
+                                    //print('THEEEE location $selectedLocation');
+                                    //print('THEEEE fuel type $selectedFuelType');
+                                    //print('THEEEE fuel grade $selectedFuelGrade');
+
+                                    if(selectedFuelType == 'petrol' && selectedFuelGrade == 'none') {
+                                      selectedFuelGrade = '95 unleaded';
+                                      canCalculateCost = false;
+                                    } else if (selectedFuelType == 'diesel' && selectedFuelGrade == 'none') {
+                                      selectedFuelGrade = '50 PPM';
+                                      canCalculateCost = false;
+                                      print('only diesel selected');
+                                    } else {
+                                      canCalculateCost = true;
+                                    }
+
+
                                     if (Platform.isIOS == true) {
 
                                     //iOS
                                       if (selectedFuelType == 'petrol') {
+
+
+
                                         petrolRecordIndexGeneration();
                                         getPetrolData(recordIndex: selectedRecordIndex);
 
                                         Future<void> updateDetails() async {
-                                          await Future.delayed(Duration(seconds: 1));
+                                          await Future.delayed(const Duration(seconds: 1));
                                           setState(() {
                                             fuelPrice = petrolValue;
-                                            totalCost = (distance / consumption) *
-                                                fuelPrice;
-                                            totalCost = double.parse(
-                                                totalCost!.toStringAsFixed(2));
-                                            print('###FINAL fuel price => $fuelPrice and 000000 $petrolValue 000000');
+
+                                            if (canCalculateCost == true){
+
+                                              totalCost = (distance / consumption) * fuelPrice;
+                                              totalCost = double.parse(
+                                                  totalCost!.toStringAsFixed(2));
+                                            } else {
+                                              totalCost = 0.00;
+                                            }
+
                                           });
                                           showModalBottomSheet(
                                             context: context,
@@ -332,14 +354,18 @@ class _HomeViewState extends State<HomeView> {
                                             recordIndex: selectedRecordIndex);
 
                                         Future<void> updateDetails() async {
-                                          await Future.delayed(Duration(seconds: 1));
+                                          await Future.delayed(const Duration(seconds: 1));
                                           setState(() {
                                             fuelPrice = dieselValue;
-                                            totalCost = (distance / consumption) *
-                                                fuelPrice;
-                                            totalCost = double.parse(
-                                                totalCost!.toStringAsFixed(2));
-                                            print('###FINAL fuel price => $fuelPrice and 000000 $dieselValue 000000');
+
+                                            if (canCalculateCost == true) {
+                                              totalCost = (distance / consumption) * fuelPrice;
+                                              totalCost = double.parse(totalCost!.toStringAsFixed(2));
+                                            } else {
+                                              totalCost = 0.00;
+                                            }
+
+
                                           });
                                           showModalBottomSheet(
                                             context: context,
@@ -349,25 +375,11 @@ class _HomeViewState extends State<HomeView> {
                                         updateDetails();
 
                                       } else {
-                                        print('from_homeView => please select a fuel type (ios) $selectedFuelType the price is $fuelPrice');
+                                        //print('from_homeView => please select a fuel type (ios) $selectedFuelType the price is $fuelPrice');
                                       }
                                     }
                                     //android
                                     else {
-                                      // try {
-                                      //   selectedFuelType;
-                                      //   selectedFuelGrade;
-                                      //   canCalculateCost = true;
-                                      // } catch (e) {
-                                      //   print(
-                                      //       'Please select a fuel type (Android): $e');
-                                      //   canCalculateCost = false;
-                                      //   showDialog(
-                                      //       context: context,
-                                      //       builder: (context) => AndroidErrorAlert(
-                                      //           errorMessage:
-                                      //           'Please select your fuel type info. \n i.e: Petrol, 95 Unleaded'));
-                                      // }
                                       if (selectedFuelType == 'petrol') {
 
                                         petrolRecordIndexGeneration();
@@ -377,13 +389,19 @@ class _HomeViewState extends State<HomeView> {
                                         //fuelPrice = petrolValue;
 
                                         Future<void> updateDetails() async {
-                                          await Future.delayed(Duration(seconds: 1));
+                                          await Future.delayed(const Duration(seconds: 1));
                                           setState(() {
                                             fuelPrice = petrolValue;
-                                            totalCost = (distance / consumption) * fuelPrice;
-                                            totalCost = double.parse(
-                                                totalCost!.toStringAsFixed(2));
-                                            print('###FINAL fuel price => $fuelPrice and $petrolValue');
+
+                                            if (canCalculateCost == true){
+
+                                              totalCost = (distance / consumption) * fuelPrice;
+                                              totalCost = double.parse(totalCost!.toStringAsFixed(2));
+
+                                            } else {
+                                              totalCost = 0.00;
+                                            }
+
                                           });
                                           showModalBottomSheet(
                                             context: context,
@@ -400,13 +418,19 @@ class _HomeViewState extends State<HomeView> {
                                             recordIndex: selectedRecordIndex);
 
                                         Future<void> updateDetails() async {
-                                          await Future.delayed(Duration(seconds: 1));
+                                          await Future.delayed(const Duration(seconds: 1));
                                           setState(() {
                                             fuelPrice = dieselValue;
-                                            totalCost = (distance / consumption) * fuelPrice;
-                                            totalCost = double.parse(
-                                                totalCost!.toStringAsFixed(2));
-                                            print('###FINAL fuel price => $fuelPrice and 0000 $dieselValue 000000');
+
+                                            if (canCalculateCost == true){
+
+                                              totalCost = (distance / consumption) * fuelPrice;
+                                              totalCost = double.parse(totalCost!.toStringAsFixed(2));
+
+                                            } else {
+                                              totalCost = 0.00;
+                                            }
+
                                           });
                                           showModalBottomSheet(
                                             context: context,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:how_far/constants.dart';
-import 'package:how_far/picker_dropdown.dart';
+import 'package:how_far/model/constants.dart';
+import 'package:how_far/controller/picker_dropdown.dart';
 import 'display_fields.dart';
-import 'home_view.dart';
+import '../view/home_view.dart';
 
 class TotalResultsSheet extends StatelessWidget {
   const TotalResultsSheet({super.key});
@@ -10,9 +10,9 @@ class TotalResultsSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xff737373),
+      color: const Color(0xff737373),
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: kColorLightShade,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20.0),
@@ -22,16 +22,16 @@ class TotalResultsSheet extends StatelessWidget {
         child: Center(
           //child: Text('$totalCost'),
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+            padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
             child: Column(
               children: [
-                Text('Travel Details',
+                const Text('Travel Details',
                   style: TextStyle(
                     fontSize: 25.0,
                     fontWeight: FontWeight.w700,
                     color: kColorDarkShade,
                   ),),
-                Divider(
+                const Divider(
                   color: kColorBlack, // Customize the color of the divider
                   thickness: 1.0,      // Customize the thickness of the divider
                   indent: 16.0,        // Customize the indent (empty space before the divider starts)
@@ -50,7 +50,7 @@ class TotalResultsSheet extends StatelessWidget {
                           color: kColorDarkAccent,
                         ),
                         child: Text(selectedLocation.toUpperCase(),
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 15.0,
                             color: kColorWhite,
                           ),),
@@ -65,7 +65,7 @@ class TotalResultsSheet extends StatelessWidget {
                           color: kColorDarkAccent,
                         ),
                         child: Text(selectedFuelType.toUpperCase(),
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 15.0,
                             color: kColorWhite,
                           ),),
@@ -80,7 +80,7 @@ class TotalResultsSheet extends StatelessWidget {
                           color: kColorDarkAccent,
                         ),
                         child: Text(selectedFuelGrade.replaceAll('unleaded', 'ULP').toUpperCase(),
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 15.0,
                             color: kColorWhite,
                           ),),
@@ -88,33 +88,33 @@ class TotalResultsSheet extends StatelessWidget {
                     ),
                   ],
                 ),
-                Divider(
+                const Divider(
                   color: kColorBlack, // Customize the color of the divider
                   thickness: 1.0,      // Customize the thickness of the divider
                   indent: 16.0,        // Customize the indent (empty space before the divider starts)
                   endIndent: 16.0,     // Customize the end indent (empty space after the divider ends)
                 ),
-                SizedBox(height: 10.0),
+                const SizedBox(height: 10.0),
                 Text('R $fuelPrice / Liter',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 25.0,
                     color: kColorBlackFancy,
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Column(
                     children: [
-                      SizedBox(height: 10.0),
+                      const SizedBox(height: 10.0),
                       TravelDetailsItem(title: 'Distance', text1: '$distance', text2: 'KM'),
-                      SizedBox(height: 10.0),
+                      const SizedBox(height: 10.0),
                       TravelDetailsItem(title: 'AVG Consumption', text1: '$consumption', text2: 'KM/L'),
-                      SizedBox(height: 10.0),
+                      const SizedBox(height: 10.0),
                       TravelDetailsItem(title: 'Travel Cost', text1: 'R ', text2: '$totalCost'),
                     ],
                   ),
                 ),
-                SizedBox(),
+                const SizedBox(),
                 Container(
                 )
               ],
@@ -143,7 +143,7 @@ class TravelDetailsItem extends StatelessWidget {
       ),
       child: Column(
         children: [
-          SizedBox(height: 10.00),
+          const SizedBox(height: 10.00),
           buildSecondaryDisplayTextBold(enteredText: title),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -152,7 +152,7 @@ class TravelDetailsItem extends StatelessWidget {
               buildSecondaryDisplayText(enteredText: text2),
             ],
           ),
-          SizedBox(height: 10,)
+          const SizedBox(height: 10,)
         ],
       ),
     );
@@ -160,5 +160,5 @@ class TravelDetailsItem extends StatelessWidget {
 }
 
 void statusPrinter(){
-  print('bottom sheet raised');
+  //print('bottom sheet raised');
 }

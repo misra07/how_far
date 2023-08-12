@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:how_far/constants.dart';
-import 'package:how_far/theme.dart';
+import 'package:how_far/model/constants.dart';
+import 'package:how_far/model/theme.dart';
 
 class primaryElevatedBTN extends StatelessWidget {
 
@@ -13,8 +13,8 @@ class primaryElevatedBTN extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
-        minimumSize: MaterialStateProperty.all(Size(200.0, 50.0)),
-        textStyle: MaterialStateProperty.all(TextStyle(fontSize: 20)),
+        minimumSize: MaterialStateProperty.all(const Size(200.0, 50.0)),
+        textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 20)),
         //backgroundColor: MaterialStatePropertyAll<Color>(Colors.cyan),
         backgroundColor: MaterialStatePropertyAll<Color>(AppTheme.buttons.btnColorPrimary),
       ),
@@ -35,10 +35,10 @@ class infoElevatedBTN extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
-        minimumSize: MaterialStateProperty.all(Size(200.0, 50.0)),
-        textStyle: MaterialStateProperty.all(TextStyle(fontSize: 20)),
+        minimumSize: MaterialStateProperty.all(const Size(200.0, 50.0)),
+        textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 20)),
         //backgroundColor: MaterialStatePropertyAll<Color>(Colors.cyan),
-        backgroundColor: MaterialStatePropertyAll<Color>(kBtnColorInfo),
+        backgroundColor: const MaterialStatePropertyAll<Color>(kBtnColorInfo),
       ),
       onPressed: onPressed,
       child: Text(btnText.toUpperCase()),
@@ -57,10 +57,10 @@ class successElevatedBTN extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
-        minimumSize: MaterialStateProperty.all(Size(200.0, 50.0)),
-        textStyle: MaterialStateProperty.all(TextStyle(fontSize: 20)),
+        minimumSize: MaterialStateProperty.all(const Size(200.0, 50.0)),
+        textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 20)),
         //backgroundColor: MaterialStatePropertyAll<Color>(Colors.cyan),
-        backgroundColor: MaterialStatePropertyAll<Color>(kBtnColorSuccess),
+        backgroundColor: const MaterialStatePropertyAll<Color>(kBtnColorSuccess),
       ),
       onPressed: onPressed,
       child: Text(btnText.toUpperCase()),
@@ -79,10 +79,10 @@ class warningElevatedBTN extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
-        minimumSize: MaterialStateProperty.all(Size(200.0, 50.0)),
-        textStyle: MaterialStateProperty.all(TextStyle(fontSize: 20)),
+        minimumSize: MaterialStateProperty.all(const Size(200.0, 50.0)),
+        textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 20)),
         //backgroundColor: MaterialStatePropertyAll<Color>(Colors.cyan),
-        backgroundColor: MaterialStatePropertyAll<Color>(kBtnColorWarning),
+        backgroundColor: const MaterialStatePropertyAll<Color>(kBtnColorWarning),
       ),
       onPressed: onPressed,
       child: Text(btnText.toUpperCase()),
@@ -101,10 +101,10 @@ class dangerElevatedBTN extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
-        minimumSize: MaterialStateProperty.all(Size(200.0, 50.0)),
-        textStyle: MaterialStateProperty.all(TextStyle(fontSize: 20)),
+        minimumSize: MaterialStateProperty.all(const Size(200.0, 50.0)),
+        textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 20)),
         //backgroundColor: MaterialStatePropertyAll<Color>(Colors.cyan),
-        backgroundColor: MaterialStatePropertyAll<Color>(kBtnColorDanger),
+        backgroundColor: const MaterialStatePropertyAll<Color>(kBtnColorDanger),
       ),
       onPressed: onPressed,
       child: Text(btnText.toUpperCase()),
@@ -123,10 +123,10 @@ class defaultElevatedBTN extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
-        minimumSize: MaterialStateProperty.all(Size(200.0, 50.0)),
-        textStyle: MaterialStateProperty.all(TextStyle(fontSize: 20)),
+        minimumSize: MaterialStateProperty.all(const Size(200.0, 50.0)),
+        textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 20)),
         //backgroundColor: MaterialStatePropertyAll<Color>(Colors.cyan),
-        backgroundColor: MaterialStatePropertyAll<Color>(kBtnColorDefault),
+        backgroundColor: const MaterialStatePropertyAll<Color>(kBtnColorDefault),
       ),
       onPressed: onPressed,
       child: Text(btnText.toUpperCase()),

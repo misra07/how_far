@@ -1,8 +1,8 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'constants.dart';
-import 'home_view.dart';
+import '../model/constants.dart';
+import '../view/home_view.dart';
 
 String selectedLocation = 'Inland';
 String selectedFuelType = '';
@@ -26,7 +26,7 @@ Future<void> showLocationActionSheet(BuildContext context) async {
         )
       ],
       cancelButton: CupertinoActionSheetAction(
-        child: Text('Cancel'),
+        child: const Text('Cancel'),
         onPressed: ()=>Navigator.pop(context),
       ),
     ),
@@ -53,7 +53,7 @@ CupertinoPicker buildLocationCupertinoPicker() {
       locationCupertinoScrollController.dispose();
       locationCupertinoScrollController = FixedExtentScrollController(initialItem: kLocationListIndex);
       locationSelectorLabel = ((kLocationList[kLocationListIndex] as Center).child as Text).data!;
-      print('the selected index is $kLocationListIndex from picker_dropdown $locationSelectorLabel');
+      //print('the selected index is $kLocationListIndex from picker_dropdown $locationSelectorLabel');
 
 
     }, children: kLocationList,
@@ -72,7 +72,7 @@ Future <void> showFuelTypeActionSheet(BuildContext context) async {
         )
       ],
       cancelButton: CupertinoActionSheetAction(
-        child: Text('Cancel'),
+        child: const Text('Cancel'),
         onPressed: ()=>Navigator.pop(context),
       ),
     ),);
@@ -113,7 +113,7 @@ Future<void> showFuelGradeActionSheet (BuildContext context) async {
         )
       ],
       cancelButton: CupertinoActionSheetAction(
-        child: Text('Cancel'),
+        child: const Text('Cancel'),
         onPressed: ()=>Navigator.pop(context),
       ),
     ),);
@@ -139,7 +139,7 @@ Future<void> showFuelGradeActionSheet (BuildContext context) async {
         break;
     }
   } else {
-    print('from dropdown_picker => please select a fuel type first');
+    //print('from dropdown_picker => please select a fuel type first');
   }
   //print('octane is $selectedFuelGrade');
   //print('modal dismissed $selectedOctaneType');
@@ -171,13 +171,13 @@ Widget buildAndroidLocationDropdown({required Function updateValueAndUI}) {
 
   return DropdownButton<String>(
     value: selectedLocation,
-    style: TextStyle(color: kColorBlackFancy, fontSize: 20.0),
+    style: const TextStyle(color: kColorBlackFancy, fontSize: 20.0),
     dropdownColor: kColorLightAccent,
     items: loopThroughLocationList(),
     onChanged: (value) {
       selectedLocation = value!;
       updateValueAndUI();
-      print('Selected location is $selectedLocation');
+      //print('Selected location is $selectedLocation');
     },
   );
 }
@@ -204,12 +204,12 @@ DropdownButton<String> buildAndroidFuelTypeDropdown({required Function updateVal
 
     value: selectedFuelType.isEmpty? 'petrol': selectedFuelType,
     items: loopThroughFuelTypeList(),
-    style: TextStyle(color: kColorBlackFancy, fontSize: 20.0),
+    style: const TextStyle(color: kColorBlackFancy, fontSize: 20.0),
     dropdownColor: kColorLightAccent,
     onChanged: (value){
       selectedFuelType = value!;
       updateValueAndUI();
-      print('Selected fuel type is $selectedFuelType');
+      //print('Selected fuel type is $selectedFuelType');
     },
   );
 }
@@ -229,7 +229,6 @@ List<DropdownMenuItem<String>> loopThroughFuelTypeList(){
   return dropdownFuelTypeList;
 }
 
-
 //3. Android - fuel grade dropdown
 int fuelGradeIndex = 0;
 bool isPetrol = true;
@@ -240,7 +239,7 @@ DropdownButton<String> buildAndroidFuelGradeDropdown({required Function updateiO
   return DropdownButton<String>(
     value: selectedFuelType == 'petrol'? ((kPetrolList[fuelGradeIndex] as Center).child as Text).data: ((kDieselList[fuelGradeIndex] as Center).child as Text).data,
     items: selectedFuelType == 'petrol'? loopThroughPetrolList(): loopThroughDieselList(),
-    style: TextStyle(color: kColorBlackFancy, fontSize: 20.0),
+    style: const TextStyle(color: kColorBlackFancy, fontSize: 20.0),
     dropdownColor: kColorLightAccent,
     onChanged: (value){
       selectedFuelGrade = value!;
