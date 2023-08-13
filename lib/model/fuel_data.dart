@@ -1,3 +1,5 @@
+import 'dart:isolate';
+
 import 'constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -47,6 +49,7 @@ Future networkCheck() async{
     print('connection is none');
   }
 }
+
 
 void getPetrolData({required int recordIndex}) async {
 
@@ -98,7 +101,7 @@ void getDieselData({required int recordIndex}) async {
   } else {
     print('unable to get fuel data');
   }
-
 }
+
 
 

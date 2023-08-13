@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:how_far/home_view.dart';
+import 'package:how_far/view/home_view.dart';
 
 import 'package:how_far/main.dart';
 
