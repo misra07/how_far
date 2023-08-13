@@ -20,7 +20,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  #flutter_network_connectivity: ^0.0.6
+
+  connectivity_plus: ^4.0.2
   flutter_lints: ^2.0.0
 
 # For information on the generic Dart part of this file, see the

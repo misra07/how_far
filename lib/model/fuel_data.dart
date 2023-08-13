@@ -2,6 +2,7 @@ import 'constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../view/home_view.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 late String petrolLocation;
 late String petrolOctane ;
@@ -13,9 +14,30 @@ bool canGetFuelData = false;
 
 
 
+
+void networkCheck() async{
+  final connectivityResult = await (Connectivity().checkConnectivity());
+  if (connectivityResult == ConnectivityResult.mobile) {
+    // I am connected to a mobile network.
+    print('connection is mobile');
+  } else if (connectivityResult == ConnectivityResult.wifi) {
+    // I am connected to a wifi network.
+    print('connection is wifi');
+  } else if (connectivityResult == ConnectivityResult.other) {
+    // I am connected to a ethernet network.
+    print('connection is other');
+  } else if (connectivityResult == ConnectivityResult.none) {
+    // I am not connected to any network.
+    print('connection is none');
+  }
+}
+
+
+
+
 void getPetrolData({required int recordIndex}) async {
 
-
+  networkCheck();
   response = await http.get(kFSAUrl, headers: {'Key': kFSAkey});
 
   if (response.statusCode == 200){
