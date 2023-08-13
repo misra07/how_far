@@ -314,7 +314,7 @@ class _HomeViewState extends State<HomeView> {
                                     }
 
 
-                                    if (Platform.isIOS == true) {
+                                    if (Platform.isIOS) {
 
                                     //iOS
                                       if (selectedFuelType == 'petrol') {
@@ -327,7 +327,7 @@ class _HomeViewState extends State<HomeView> {
                                           setState(() {
                                             fuelPrice = petrolValue;
 
-                                            if (canCalculateCost == true){
+                                            if (canCalculateCost){
 
                                               totalCost = (distance / consumption) * fuelPrice;
                                               totalCost = double.parse(
@@ -337,31 +337,47 @@ class _HomeViewState extends State<HomeView> {
                                             }
 
                                           });
-
-                                            // showModalBottomSheet(
-                                            //   context: context,
-                                            //   builder: buildBottomSheet,
-                                            // );
-
-                                          showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return CupertinoAlertDialog(
-                                                title: Text('TEST'),
-                                                content: Text('testing one two three'),
-                                                actions: [
-                                                  CupertinoDialogAction(
-                                                    child: Text('close'),
-                                                    onPressed: () {
-                                                      Navigator.of(context).pop();
-                                                    },
-                                                  )
-                                                ],
-                                              );
-                                            },
-                                          );
-
-
+                                          if(canGetFuelData) {
+                                            //api call is successful
+                                            showModalBottomSheet(
+                                              context: context,
+                                              builder: buildBottomSheet,
+                                            );
+                                          } else if (!canGetFuelData && connectionErrorCause == 'NA'){
+                                            //api call unsuccessful
+                                            showDialog
+                                              (context: context,
+                                                builder: (BuildContext context){
+                                                  return IosErrorAlert(errorMessage: 'Something went wrong. Plese try again later');
+                                                }
+                                            );
+                                          } else {
+                                            switch (connectionErrorCause){
+                                              case 'wifi':
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (BuildContext context) {
+                                                      return IosErrorAlert(errorMessage: 'No internet connection. \nWifi has no internet access');
+                                                    }
+                                                );
+                                                break;
+                                              case 'none':
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (BuildContext context) {
+                                                      return IosErrorAlert(errorMessage: 'No internet connection');
+                                                    }
+                                                );
+                                                break;
+                                              case 'other':
+                                                showDialog
+                                                  (context: context, 
+                                                    builder: (BuildContext context){
+                                                    return IosErrorAlert(errorMessage: 'Something went wrong. Plese try again later');
+                                                    }
+                                                );
+                                            }
+                                          }
 
                                         }
                                         updateDetails();
@@ -384,10 +400,48 @@ class _HomeViewState extends State<HomeView> {
 
 
                                           });
-                                          showModalBottomSheet(
-                                            context: context,
-                                            builder: buildBottomSheet,
-                                          );
+
+                                          if(canGetFuelData) {
+                                            //api call is successful
+                                            showModalBottomSheet(
+                                              context: context,
+                                              builder: buildBottomSheet,
+                                            );
+                                          } else if (!canGetFuelData && connectionErrorCause == 'NA'){
+                                            //api call unsuccessful
+                                            showDialog
+                                              (context: context,
+                                                builder: (BuildContext context){
+                                                  return IosErrorAlert(errorMessage: 'Something went wrong. Plese try again later');
+                                                }
+                                            );
+                                          } else {
+                                            switch (connectionErrorCause){
+                                              case 'wifi':
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (BuildContext context) {
+                                                      return IosErrorAlert(errorMessage: 'No internet connection. \nWifi has no internet access');
+                                                    }
+                                                );
+                                                break;
+                                              case 'none':
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (BuildContext context) {
+                                                      return IosErrorAlert(errorMessage: 'No internet connection');
+                                                    }
+                                                );
+                                                break;
+                                              case 'other':
+                                                showDialog
+                                                  (context: context,
+                                                    builder: (BuildContext context){
+                                                      return IosErrorAlert(errorMessage: 'Something went wrong. Plese try again later');
+                                                    }
+                                                );
+                                            }
+                                          }
                                         }
                                         updateDetails();
 
@@ -420,10 +474,49 @@ class _HomeViewState extends State<HomeView> {
                                             }
 
                                           });
-                                          showModalBottomSheet(
-                                            context: context,
-                                            builder: buildBottomSheet,
-                                          );
+
+                                          if(canGetFuelData) {
+                                            //api call is successful
+                                            showModalBottomSheet(
+                                              context: context,
+                                              builder: buildBottomSheet,
+                                            );
+                                          } else if (!canGetFuelData && connectionErrorCause == 'NA'){
+                                            //api call unsuccessful
+                                            showDialog
+                                              (context: context,
+                                                builder: (BuildContext context){
+                                                  return AndroidErrorAlert(errorMessage: 'Something went wrong. Plese try again later');
+                                                }
+                                            );
+                                          } else {
+                                            switch (connectionErrorCause){
+                                              case 'wifi':
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (BuildContext context) {
+                                                      return AndroidErrorAlert(errorMessage: 'No internet connection. \nWifi has no internet access');
+                                                    }
+                                                );
+                                                break;
+                                              case 'none':
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (BuildContext context) {
+                                                      return AndroidErrorAlert(errorMessage: 'No internet connection');
+                                                    }
+                                                );
+                                                break;
+                                              case 'other':
+                                                showDialog
+                                                  (context: context,
+                                                    builder: (BuildContext context){
+                                                      return AndroidErrorAlert(errorMessage: 'Something went wrong. Plese try again later');
+                                                    }
+                                                );
+                                            }
+                                          }
+
                                         }
                                         updateDetails();
 
@@ -449,10 +542,48 @@ class _HomeViewState extends State<HomeView> {
                                             }
 
                                           });
-                                          showModalBottomSheet(
-                                            context: context,
-                                            builder: buildBottomSheet,
-                                          );
+
+                                          if(canGetFuelData) {
+                                            //api call is successful
+                                            showModalBottomSheet(
+                                              context: context,
+                                              builder: buildBottomSheet,
+                                            );
+                                          } else if (!canGetFuelData && connectionErrorCause == 'NA'){
+                                            //api call unsuccessful
+                                            showDialog
+                                              (context: context,
+                                                builder: (BuildContext context){
+                                                  return AndroidErrorAlert(errorMessage: 'Something went wrong. Plese try again later');
+                                                }
+                                            );
+                                          } else {
+                                            switch (connectionErrorCause){
+                                              case 'wifi':
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (BuildContext context) {
+                                                      return AndroidErrorAlert(errorMessage: 'No internet connection. \nWifi has no internet access');
+                                                    }
+                                                );
+                                                break;
+                                              case 'none':
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (BuildContext context) {
+                                                      return AndroidErrorAlert(errorMessage: 'No internet connection');
+                                                    }
+                                                );
+                                                break;
+                                              case 'other':
+                                                showDialog
+                                                  (context: context,
+                                                    builder: (BuildContext context){
+                                                      return AndroidErrorAlert(errorMessage: 'Something went wrong. Plese try again later');
+                                                    }
+                                                );
+                                            }
+                                          }
                                         }
                                         updateDetails();
 
