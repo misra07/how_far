@@ -301,9 +301,6 @@ class _HomeViewState extends State<HomeView> {
                                     selectedRecordIndex == 999 ? selectedRecordIndex = 4: selectedRecordIndex =4;
                                     defaultFuelGradeSelectorLabel = selectedFuelGrade;
 
-                                    //print('THEEEE location $selectedLocation');
-                                    //print('THEEEE fuel type $selectedFuelType');
-                                    //print('THEEEE fuel grade $selectedFuelGrade');
 
                                     if(selectedFuelType == 'petrol' && selectedFuelGrade == 'none') {
                                       selectedFuelGrade = '95 unleaded';
@@ -321,8 +318,6 @@ class _HomeViewState extends State<HomeView> {
 
                                     //iOS
                                       if (selectedFuelType == 'petrol') {
-
-
 
                                         petrolRecordIndexGeneration();
                                         getPetrolData(recordIndex: selectedRecordIndex);
@@ -342,10 +337,32 @@ class _HomeViewState extends State<HomeView> {
                                             }
 
                                           });
-                                          showModalBottomSheet(
+
+                                            // showModalBottomSheet(
+                                            //   context: context,
+                                            //   builder: buildBottomSheet,
+                                            // );
+
+                                          showDialog(
                                             context: context,
-                                            builder: buildBottomSheet,
+                                            builder: (BuildContext context) {
+                                              return CupertinoAlertDialog(
+                                                title: Text('TEST'),
+                                                content: Text('testing one two three'),
+                                                actions: [
+                                                  CupertinoDialogAction(
+                                                    child: Text('close'),
+                                                    onPressed: () {
+                                                      Navigator.of(context).pop();
+                                                    },
+                                                  )
+                                                ],
+                                              );
+                                            },
                                           );
+
+
+
                                         }
                                         updateDetails();
                                       } else if (selectedFuelType == 'diesel') {

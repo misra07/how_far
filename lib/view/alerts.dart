@@ -38,7 +38,6 @@ class IosErrorAlert extends StatelessWidget {
         GestureDetector(
           onTap: (){
             Navigator.of(context).pop();
-            print('Gesture detected');
           },
           child: Container(
             color: Colors.transparent,
@@ -63,3 +62,10 @@ class IosErrorAlert extends StatelessWidget {
   }
 }
 
+// EXAMPLE
+// showDialog(
+// context: context as BuildContext, or simply "context"
+// builder: (BuildContext context) {
+// return IosErrorAlert(errorMessage: 'No internet connection /n. If you are on wifi, insure your wifi has internet connectivity and try again');
+// }
+// );
