@@ -9,6 +9,8 @@ import 'dart:io' show Platform;
 
 //CURRENTLY NOT IN USE
 class RunCalculations extends StatefulWidget {
+  const RunCalculations({super.key});
+
   @override
   State<RunCalculations> createState() => _RunCalculationsState();
 }

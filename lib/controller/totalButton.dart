@@ -1,32 +1,23 @@
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
-import 'package:how_far/model/constants.dart';
-import 'package:how_far/controller/showCalculationsSheet.dart';
-import 'package:how_far/model/texts.dart';
 import 'package:how_far/view/alerts.dart';
 import '../model/fuel_data.dart';
-import 'package:flutter/cupertino.dart';
 import '../controller/picker_dropdown.dart';
 import 'package:how_far/view/basic_button.dart';
 import '../model/record_index_generator.dart';
-import '../controller/display_fields.dart';
 import '../view/home_view.dart';
 
 //CURRENTLY UNUSED
-class buildTotalButton extends StatefulWidget {
-  const buildTotalButton(buildTotalButton context, {super.key});
+class BuildTotalButton extends StatefulWidget {
+  const BuildTotalButton(BuildTotalButton context, {super.key});
 
   @override
-  State<buildTotalButton> createState() => buildTotalButtonState();
+  State<BuildTotalButton> createState() => BuildTotalButtonState();
 }
 
-class buildTotalButtonState extends State<buildTotalButton> {
-  @override
-
-
-
-  primaryElevatedBTN buildTotalButton(BuildContext context) {
-    return primaryElevatedBTN(
+class BuildTotalButtonState extends State<BuildTotalButton> {
+  PrimaryElevatedBTN buildTotalButton(BuildContext context) {
+    return PrimaryElevatedBTN(
         btnText: 'Calculate',
         onPressed: () async {
 
@@ -40,7 +31,7 @@ class buildTotalButtonState extends State<buildTotalButton> {
           } else if (selectedFuelType == 'diesel' && selectedFuelGrade == 'none') {
             selectedFuelGrade = '50 PPM';
             canCalculateCost = false;
-            print('only diesel selected');
+            //only diesel selected
           } else {
             canCalculateCost = true;
           }
@@ -80,7 +71,7 @@ class buildTotalButtonState extends State<buildTotalButton> {
                   showDialog
                     (context: context,
                       builder: (BuildContext context){
-                        return IosErrorAlert(errorMessage: 'Something went wrong. Plese try again later');
+                        return const IosErrorAlert(errorMessage: 'Something went wrong. Please try again later');
                       }
                   );
                 } else {
@@ -89,7 +80,7 @@ class buildTotalButtonState extends State<buildTotalButton> {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return IosErrorAlert(errorMessage: 'No internet connection. \nWifi has no internet access');
+                            return const IosErrorAlert(errorMessage: 'No internet connection. \nWifi has no internet access');
                           }
                       );
                       break;
@@ -97,7 +88,7 @@ class buildTotalButtonState extends State<buildTotalButton> {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return IosErrorAlert(errorMessage: 'No internet connection');
+                            return const IosErrorAlert(errorMessage: 'No internet connection');
                           }
                       );
                       break;
@@ -105,7 +96,7 @@ class buildTotalButtonState extends State<buildTotalButton> {
                       showDialog
                         (context: context,
                           builder: (BuildContext context){
-                            return IosErrorAlert(errorMessage: 'Something went wrong. Plese try again later');
+                            return const IosErrorAlert(errorMessage: 'Something went wrong. Please try again later');
                           }
                       );
                   }
@@ -144,7 +135,7 @@ class buildTotalButtonState extends State<buildTotalButton> {
                   showDialog
                     (context: context,
                       builder: (BuildContext context){
-                        return IosErrorAlert(errorMessage: 'Something went wrong. Plese try again later');
+                        return const IosErrorAlert(errorMessage: 'Something went wrong. Please try again later');
                       }
                   );
                 } else {
@@ -153,7 +144,7 @@ class buildTotalButtonState extends State<buildTotalButton> {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return IosErrorAlert(errorMessage: 'No internet connection. \nWifi has no internet access');
+                            return const IosErrorAlert(errorMessage: 'No internet connection. \nWifi has no internet access');
                           }
                       );
                       break;
@@ -161,7 +152,7 @@ class buildTotalButtonState extends State<buildTotalButton> {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return IosErrorAlert(errorMessage: 'No internet connection');
+                            return const IosErrorAlert(errorMessage: 'No internet connection');
                           }
                       );
                       break;
@@ -169,7 +160,7 @@ class buildTotalButtonState extends State<buildTotalButton> {
                       showDialog
                         (context: context,
                           builder: (BuildContext context){
-                            return IosErrorAlert(errorMessage: 'Something went wrong. Plese try again later');
+                            return const IosErrorAlert(errorMessage: 'Something went wrong. Please try again later');
                           }
                       );
                   }
@@ -218,7 +209,7 @@ class buildTotalButtonState extends State<buildTotalButton> {
                   showDialog
                     (context: context,
                       builder: (BuildContext context){
-                        return AndroidErrorAlert(errorMessage: 'Something went wrong. Plese try again later');
+                        return const AndroidErrorAlert(errorMessage: 'Something went wrong. Please try again later');
                       }
                   );
                 } else {
@@ -227,7 +218,7 @@ class buildTotalButtonState extends State<buildTotalButton> {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return AndroidErrorAlert(errorMessage: 'No internet connection. \nWifi has no internet access');
+                            return const AndroidErrorAlert(errorMessage: 'No internet connection. \nWifi has no internet access');
                           }
                       );
                       break;
@@ -235,7 +226,7 @@ class buildTotalButtonState extends State<buildTotalButton> {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return AndroidErrorAlert(errorMessage: 'No internet connection');
+                            return const AndroidErrorAlert(errorMessage: 'No internet connection');
                           }
                       );
                       break;
@@ -243,7 +234,7 @@ class buildTotalButtonState extends State<buildTotalButton> {
                       showDialog
                         (context: context,
                           builder: (BuildContext context){
-                            return AndroidErrorAlert(errorMessage: 'Something went wrong. Plese try again later');
+                            return const AndroidErrorAlert(errorMessage: 'Something went wrong. Please try again later');
                           }
                       );
                   }
@@ -286,7 +277,7 @@ class buildTotalButtonState extends State<buildTotalButton> {
                   showDialog
                     (context: context,
                       builder: (BuildContext context){
-                        return AndroidErrorAlert(errorMessage: 'Something went wrong. Plese try again later');
+                        return const AndroidErrorAlert(errorMessage: 'Something went wrong. Please try again later');
                       }
                   );
                 } else {
@@ -295,7 +286,7 @@ class buildTotalButtonState extends State<buildTotalButton> {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return AndroidErrorAlert(errorMessage: 'No internet connection. \nWifi has no internet access');
+                            return const AndroidErrorAlert(errorMessage: 'No internet connection. \nWifi has no internet access');
                           }
                       );
                       break;
@@ -303,7 +294,7 @@ class buildTotalButtonState extends State<buildTotalButton> {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return AndroidErrorAlert(errorMessage: 'No internet connection');
+                            return const AndroidErrorAlert(errorMessage: 'No internet connection');
                           }
                       );
                       break;
@@ -311,24 +302,20 @@ class buildTotalButtonState extends State<buildTotalButton> {
                       showDialog
                         (context: context,
                           builder: (BuildContext context){
-                            return AndroidErrorAlert(errorMessage: 'Something went wrong. Plese try again later');
+                            return const AndroidErrorAlert(errorMessage: 'Something went wrong. Please try again later');
                           }
                       );
                   }
                 }
               }
               updateDetails();
-
-
-            } else {
-              print(
-                  'from_homeView => please select a fuel type (android)');
             }
           }
         });
   }
 
 
+  @override
   Widget build(BuildContext context) {
     return const Placeholder();
   }

@@ -37,6 +37,7 @@ void updateFields(){
 
 Widget buildBottomSheet(BuildContext context) => const TotalResultsSheet();
 
+
 class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
@@ -85,10 +86,10 @@ class _HomeViewState extends State<HomeView> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  basicText(text: 'Location', color: kColorDarkShade,),
+                                  const BasicText(text: 'Location', color: kColorDarkShade,),
                                   Visibility(
                                     visible: Platform.isIOS,
-                                    child: infoElevatedBTN(
+                                    child: InfoElevatedBTN(
                                       btnText: locationSelectorLabel,
                                       onPressed: () {
                                         showLocationActionSheet(context);
@@ -117,10 +118,10 @@ class _HomeViewState extends State<HomeView> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  basicText(text: 'Fuel Type', color: kColorDarkShade,),
+                                  const BasicText(text: 'Fuel Type', color: kColorDarkShade,),
                                   Visibility(
                                       visible: Platform.isIOS,
-                                      child: infoElevatedBTN(
+                                      child: InfoElevatedBTN(
                                           btnText: fuelTypeSelectorLabel,
                                           onPressed: () {
 
@@ -151,10 +152,10 @@ class _HomeViewState extends State<HomeView> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  basicText(text: 'Fuel Grade', color: kColorDarkShade,),
+                                  const BasicText(text: 'Fuel Grade', color: kColorDarkShade,),
                                   Visibility(
                                       visible: Platform.isIOS,
-                                      child: infoElevatedBTN(
+                                      child: InfoElevatedBTN(
                                         btnText: defaultFuelGradeSelectorLabel,
                                         onPressed: () {
                                           showFuelGradeActionSheet(context);
@@ -185,7 +186,7 @@ class _HomeViewState extends State<HomeView> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  basicText(text: 'Fuel Price', color: kColorDarkShade,),
+                                  const BasicText(text: 'Fuel Price', color: kColorDarkShade,),
                                   Container(
                                     width: 200.0,
                                     height: 50.0,
@@ -225,7 +226,7 @@ class _HomeViewState extends State<HomeView> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  basicText(text: 'Distance', color: kColorDarkShade,),
+                                  const BasicText(text: 'Distance', color: kColorDarkShade,),
                                   TextField(
                                     keyboardType: TextInputType.number,
                                     onChanged: (value) {
@@ -260,7 +261,7 @@ class _HomeViewState extends State<HomeView> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  basicText(text: 'Consumption', color: kColorDarkShade,),
+                                  const BasicText(text: 'Consumption', color: kColorDarkShade,),
                                   TextField(
                                     keyboardType: TextInputType.number,
                                     onChanged: (value) {
@@ -301,8 +302,8 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  primaryElevatedBTN buildTotalButton(BuildContext context) {
-    return primaryElevatedBTN(
+  PrimaryElevatedBTN buildTotalButton(BuildContext context) {
+    return PrimaryElevatedBTN(
         btnText: 'Calculate',
         onPressed: () async {
 
@@ -316,7 +317,7 @@ class _HomeViewState extends State<HomeView> {
           } else if (selectedFuelType == 'diesel' && selectedFuelGrade == 'none') {
             selectedFuelGrade = '50 PPM';
             canCalculateCost = false;
-            print('only diesel selected');
+            //only diesel selected'
           } else {
             canCalculateCost = true;
           }
@@ -352,17 +353,12 @@ class _HomeViewState extends State<HomeView> {
                     builder: buildBottomSheet,
                   );
 
-
-
-
-
-
                 } else if (!canGetFuelData && connectionErrorCause == 'NA'){
                   //api call unsuccessful
                   showDialog
                     (context: context,
                       builder: (BuildContext context){
-                        return IosErrorAlert(errorMessage: 'Something went wrong. Plese try again later');
+                        return const IosErrorAlert(errorMessage: 'Something went wrong. Please try again later');
                       }
                   );
                 } else {
@@ -371,7 +367,7 @@ class _HomeViewState extends State<HomeView> {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return IosErrorAlert(errorMessage: 'No internet connection. \nWifi has no internet access');
+                            return const IosErrorAlert(errorMessage: 'No internet connection. \nWifi has no internet access');
                           }
                       );
                       break;
@@ -379,7 +375,7 @@ class _HomeViewState extends State<HomeView> {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return IosErrorAlert(errorMessage: 'No internet connection');
+                            return const IosErrorAlert(errorMessage: 'No internet connection');
                           }
                       );
                       break;
@@ -387,7 +383,7 @@ class _HomeViewState extends State<HomeView> {
                       showDialog
                         (context: context,
                           builder: (BuildContext context){
-                            return IosErrorAlert(errorMessage: 'Something went wrong. Plese try again later');
+                            return const IosErrorAlert(errorMessage: 'Something went wrong. Please try again later');
                           }
                       );
                   }
@@ -426,7 +422,7 @@ class _HomeViewState extends State<HomeView> {
                   showDialog
                     (context: context,
                       builder: (BuildContext context){
-                        return IosErrorAlert(errorMessage: 'Something went wrong. Plese try again later');
+                        return const IosErrorAlert(errorMessage: 'Something went wrong. Please try again later');
                       }
                   );
                 } else {
@@ -435,7 +431,7 @@ class _HomeViewState extends State<HomeView> {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return IosErrorAlert(errorMessage: 'No internet connection. \nWifi has no internet access');
+                            return const IosErrorAlert(errorMessage: 'No internet connection. \nWifi has no internet access');
                           }
                       );
                       break;
@@ -443,7 +439,7 @@ class _HomeViewState extends State<HomeView> {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return IosErrorAlert(errorMessage: 'No internet connection');
+                            return const IosErrorAlert(errorMessage: 'No internet connection');
                           }
                       );
                       break;
@@ -451,7 +447,7 @@ class _HomeViewState extends State<HomeView> {
                       showDialog
                         (context: context,
                           builder: (BuildContext context){
-                            return IosErrorAlert(errorMessage: 'Something went wrong. Plese try again later');
+                            return const IosErrorAlert(errorMessage: 'Something went wrong. Please try again later');
                           }
                       );
                   }
@@ -500,7 +496,7 @@ class _HomeViewState extends State<HomeView> {
                   showDialog
                     (context: context,
                       builder: (BuildContext context){
-                        return AndroidErrorAlert(errorMessage: 'Something went wrong. Plese try again later');
+                        return const AndroidErrorAlert(errorMessage: 'Something went wrong. Please try again later');
                       }
                   );
                 } else {
@@ -509,7 +505,7 @@ class _HomeViewState extends State<HomeView> {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return AndroidErrorAlert(errorMessage: 'No internet connection. \nWifi has no internet access');
+                            return const AndroidErrorAlert(errorMessage: 'No internet connection. \nWifi has no internet access');
                           }
                       );
                       break;
@@ -517,7 +513,7 @@ class _HomeViewState extends State<HomeView> {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return AndroidErrorAlert(errorMessage: 'No internet connection');
+                            return const AndroidErrorAlert(errorMessage: 'No internet connection');
                           }
                       );
                       break;
@@ -525,7 +521,7 @@ class _HomeViewState extends State<HomeView> {
                       showDialog
                         (context: context,
                           builder: (BuildContext context){
-                            return AndroidErrorAlert(errorMessage: 'Something went wrong. Plese try again later');
+                            return const AndroidErrorAlert(errorMessage: 'Something went wrong. Please try again later');
                           }
                       );
                   }
@@ -568,7 +564,7 @@ class _HomeViewState extends State<HomeView> {
                   showDialog
                     (context: context,
                       builder: (BuildContext context){
-                        return AndroidErrorAlert(errorMessage: 'Something went wrong. Plese try again later');
+                        return const AndroidErrorAlert(errorMessage: 'Something went wrong. Please try again later');
                       }
                   );
                 } else {
@@ -577,7 +573,7 @@ class _HomeViewState extends State<HomeView> {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return AndroidErrorAlert(errorMessage: 'No internet connection. \nWifi has no internet access');
+                            return const AndroidErrorAlert(errorMessage: 'No internet connection. \nWifi has no internet access');
                           }
                       );
                       break;
@@ -585,7 +581,7 @@ class _HomeViewState extends State<HomeView> {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return AndroidErrorAlert(errorMessage: 'No internet connection');
+                            return const AndroidErrorAlert(errorMessage: 'No internet connection');
                           }
                       );
                       break;
@@ -593,18 +589,13 @@ class _HomeViewState extends State<HomeView> {
                       showDialog
                         (context: context,
                           builder: (BuildContext context){
-                            return AndroidErrorAlert(errorMessage: 'Something went wrong. Plese try again later');
+                            return const AndroidErrorAlert(errorMessage: 'Something went wrong. Please try again later');
                           }
                       );
                   }
                 }
               }
               updateDetails();
-
-
-            } else {
-              print(
-                  'from_homeView => please select a fuel type (android)');
             }
           }
         });

@@ -1,13 +1,10 @@
-import 'dart:isolate';
-
 import 'package:how_far/model/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
 class AndroidErrorAlert extends StatelessWidget {
 final String errorMessage;
-AndroidErrorAlert({required this.errorMessage});
+const AndroidErrorAlert({super.key, required this.errorMessage});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +17,10 @@ AndroidErrorAlert({required this.errorMessage});
           child: const Text('Close'),
         )
       ],
-      title: const Text('Error'),
+      title: const Text('Error',
+      style:TextStyle(
+        color:kBtnColorDanger,
+      ),),
       contentPadding: const EdgeInsets.all(20.0),
       content: Text(errorMessage),
       elevation: kDefaultElevation,
@@ -31,7 +31,7 @@ AndroidErrorAlert({required this.errorMessage});
 
 class IosErrorAlert extends StatelessWidget {
   final String errorMessage;
-  IosErrorAlert({required this.errorMessage});
+  const IosErrorAlert({super.key, required this.errorMessage});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,11 @@ class IosErrorAlert extends StatelessWidget {
         ),
         Center(
           child: CupertinoAlertDialog(
-            title: const Text('Error'),
+            title: const Text('Error',
+              style: TextStyle(
+                color: kBtnColorDanger,
+              ),
+            ),
             content: Text(errorMessage),
             actions: [
               CupertinoDialogAction(
@@ -75,29 +79,7 @@ class IosErrorAlert extends StatelessWidget {
 
 
 
-void main() {
-  // Create a ReceivePort for receiving messages from the isolate
-  final receivePort = ReceivePort();
 
-  // Spawn a new isolate and pass it the receive port
-  Isolate.spawn(backgroundTask, receivePort.sendPort);
-
-  // Receive and process messages from the isolate
-  receivePort.listen((message) {
-    print('Received message from isolate: $message');
-  });
-}
-
-void backgroundTask(SendPort sendPort) {
-  // Perform background work here
-  for (int i = 0; i < 5; i++) {
-    sendPort.send('Task $i completed');
-  }
-
-  // Close the isolate's send port when done
-  sendPort.send('Task completed');
-  //sendPort.close();
-}
 
 
 

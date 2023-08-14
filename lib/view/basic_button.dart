@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:how_far/model/constants.dart';
 import 'package:how_far/model/theme.dart';
 
-class primaryElevatedBTN extends StatelessWidget {
+class PrimaryElevatedBTN extends StatelessWidget {
 
-  late String btnText;
-  late VoidCallback onPressed;
+  final String btnText;
+  final VoidCallback onPressed;
 
-  primaryElevatedBTN({required this.btnText, required this.onPressed});
+  const PrimaryElevatedBTN({super.key, required this.btnText, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +24,12 @@ class primaryElevatedBTN extends StatelessWidget {
   }
 }
 
-class infoElevatedBTN extends StatelessWidget {
+class InfoElevatedBTN extends StatelessWidget {
 
-  late String btnText;
-  late VoidCallback onPressed;
+  final String btnText;
+  final VoidCallback onPressed;
 
-  infoElevatedBTN({required this.btnText, required this.onPressed});
+  const InfoElevatedBTN({super.key, required this.btnText, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +46,12 @@ class infoElevatedBTN extends StatelessWidget {
   }
 }
 
-class successElevatedBTN extends StatelessWidget {
+class SuccessElevatedBTN extends StatelessWidget {
 
-  late String btnText;
-  late VoidCallback onPressed;
+  final String btnText;
+  final VoidCallback onPressed;
 
-  successElevatedBTN({required this.btnText, required this.onPressed});
+  const SuccessElevatedBTN({super.key, required this.btnText, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -68,12 +68,12 @@ class successElevatedBTN extends StatelessWidget {
   }
 }
 
-class warningElevatedBTN extends StatelessWidget {
+class WarningElevatedBTN extends StatelessWidget {
 
-  late String btnText;
-  late VoidCallback onPressed;
+  final String btnText;
+  final VoidCallback onPressed;
 
-  warningElevatedBTN({required this.btnText, required this.onPressed});
+  const WarningElevatedBTN({super.key, required this.btnText, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -90,12 +90,12 @@ class warningElevatedBTN extends StatelessWidget {
   }
 }
 
-class dangerElevatedBTN extends StatelessWidget {
+class DangerElevatedBTN extends StatelessWidget {
 
-  late String btnText;
-  late VoidCallback onPressed;
+  final String btnText;
+  final VoidCallback onPressed;
 
-  dangerElevatedBTN({required this.btnText, required this.onPressed});
+  const DangerElevatedBTN({super.key, required this.btnText, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -112,12 +112,12 @@ class dangerElevatedBTN extends StatelessWidget {
   }
 }
 
-class defaultElevatedBTN extends StatelessWidget {
+class DefaultElevatedBTN extends StatelessWidget {
 
-  late String btnText;
-  late VoidCallback onPressed;
+  final String btnText;
+  final VoidCallback onPressed;
 
-  defaultElevatedBTN({required this.btnText, required this.onPressed});
+  const DefaultElevatedBTN({super.key, required this.btnText, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {

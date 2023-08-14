@@ -1,11 +1,7 @@
-import 'dart:isolate';
-
 import 'constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import '../view/home_view.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'dart:io' show Platform;
 
 late String petrolLocation;
 late String petrolOctane ;
@@ -13,7 +9,7 @@ late String petrolType;
 double petrolValue = 00;
 bool canCalculateCost = true;
 http.Response response = http.Response('{"message": "Hello, world!"}', 999);
-bool canGetFuelData = false;
+bool canGetFuelData = true;
 bool hasInternet = true;
 String connectionErrorCause = 'NA';
 
@@ -28,25 +24,22 @@ Future networkCheck() async{
 
 
   if (connectivityResult == ConnectivityResult.mobile) {
-    // I am connected to a mobile network.
+    // Connected to a mobile network.
     hasInternet = true;
     connectionErrorCause = 'NA';
-    print('connection is mobile');
+
   } else if (connectivityResult == ConnectivityResult.wifi) {
-    // I am connected to a wifi network.
+    // Connected to a wifi network.
     hasInternet = true;
     connectionErrorCause = 'NA';
-    print('connection is wifi');
   } else if (connectivityResult == ConnectivityResult.other) {
-    // I am connected to a ethernet network.
+    // Connected to a ethernet network.
     hasInternet = true;
     connectionErrorCause = 'NA';
-    print('connection is other');
   } else if (connectivityResult == ConnectivityResult.none) {
-    // I am not connected to any network.
+    //Not connected to any network.
     hasInternet = false;
     connectionErrorCause = 'none';
-    print('connection is none');
   }
 }
 
@@ -71,7 +64,6 @@ void getPetrolData({required int recordIndex}) async {
       petrolType = jsonDecode(fullResponse)['petrol'][recordIndex]['type'];
       petrolValue = jsonDecode(fullResponse)['petrol'][recordIndex]['value']/100;
     } else {
-      print('unable to get fuel data');
       //canGetFuelData = false; handle different api status responses here
 
     }
@@ -98,8 +90,6 @@ void getDieselData({required int recordIndex}) async {
     dieselLocation = jsonDecode(fullResponse)['diesel'][recordIndex]['location'];
     dieselPPM = jsonDecode(fullResponse)['diesel'][recordIndex]['percentage'];
     dieselValue = jsonDecode(fullResponse)['diesel'][recordIndex]['value']/100;
-  } else {
-    print('unable to get fuel data');
   }
 }
 

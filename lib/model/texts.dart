@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'constants.dart';
 
-class basicText extends StatelessWidget {
-  late String text;
-  late Color? color;
+class BasicText extends StatelessWidget {
+  final String text;
+  final Color? color;
 
-  basicText({required this.text, this.color});
+  const BasicText({super.key, required this.text, this.color});
 
   @override
   Widget build(BuildContext context) {
