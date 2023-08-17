@@ -7,8 +7,8 @@ Text buildMainDisplayText({required String enteredText}) {
 
   return Text(enteredText,
       style: const TextStyle(
-        fontSize: 20.0,
-        color: kColorBlackFancy,
+        fontSize: 25.0,
+        color: kColorWhiteFancy,
       )
   );
 }
@@ -28,7 +28,7 @@ Text buildSecondaryDisplayText({required String enteredText}) {
     style: const TextStyle(
       fontSize: 20.0,
       color: kColorBlackFancy,
-    ),
+  ),
   );
 }
 

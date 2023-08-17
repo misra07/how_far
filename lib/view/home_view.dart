@@ -9,6 +9,7 @@ import '../controller/picker_dropdown.dart';
 import 'basic_button.dart';
 import '../model/record_index_generator.dart';
 import '../controller/display_fields.dart';
+import 'package:intl/intl.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -19,10 +20,11 @@ class HomeView extends StatefulWidget {
 
 double fuelPrice = 00.00;
 String platform =
-(Platform.isIOS == true ? Platform.isIOS : Platform.isAndroid) as String;
+(Platform.isIOS? Platform.isIOS : Platform.isAndroid) as String;
 double distance = 00.00;
 double consumption = 00.00;
 double? totalCost;
+String formattedTotalCost = NumberFormat('#,##0.00', 'en_US').format(totalCost);
 String locationSelectorLabel = ((kLocationList[kLocationListIndex] as Center).child as Text).data?? 'Inland';
 String fuelTypeSelectorLabel = ((kFuelTypeList[kFuelTypeListIndex] as Center).child as Text).data ?? 'petrol';
 String defaultFuelGradeSelectorLabel = ((kPetrolList[kFuelGradeListIndex] as Center).child as Text).data ?? ((kDieselList[kFuelGradeListIndex] as Center).child as Text).data!;
@@ -62,242 +64,274 @@ class _HomeViewState extends State<HomeView> {
 
 
     return Scaffold(
-      backgroundColor: kColorLightShade,
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(15.0, 30.0, 15.0, 15.0),
-        child: SafeArea(
-          child: Column(
-            children: [
-              const CircleAvatar(
-                radius: 50.0,
-                //backgroundColor: Colors.red,
-                backgroundImage: AssetImage('assets/howfarLogo.png'),
-              ),
-              const SizedBox(height: 20.0),
-              Expanded(
-                child: Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const BasicText(text: 'Location', color: kColorDarkShade,),
-                                  Visibility(
-                                    visible: Platform.isIOS,
-                                    child: InfoElevatedBTN(
-                                      btnText: locationSelectorLabel,
-                                      onPressed: () {
-                                        showLocationActionSheet(context);
-                                        setState(() {
-                                          locationSelectorLabel = ((kLocationList[kLocationListIndex] as Center).child as Text).data!;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                  Visibility(
-                                    visible: Platform.isAndroid,
-                                    child: buildAndroidLocationDropdown(
-                                        updateValueAndUI: () {
-                                          setState(() {
-                                            selectedLocation;
-                                          });
-                                        }),
-                                  )
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 20.0,
-                            ),
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const BasicText(text: 'Fuel Type', color: kColorDarkShade,),
-                                  Visibility(
-                                      visible: Platform.isIOS,
-                                      child: InfoElevatedBTN(
-                                          btnText: fuelTypeSelectorLabel,
-                                          onPressed: () {
-
-                                            showFuelTypeActionSheet(context);
-                                            setState(() {
-                                              locationSelectorLabel = ((kLocationList[kLocationListIndex] as Center).child as Text).data!;
-                                              fuelTypeSelectorLabel = ((kFuelTypeList[kFuelTypeListIndex] as Center).child as Text).data!;
-
-                                            });
-                                          })),
-                                  Visibility(
-                                    visible: Platform.isAndroid,
-                                    child: buildAndroidFuelTypeDropdown(
-                                        updateValueAndUI: () {
-                                          setState(() {
-                                            //selectedFuelType;
-                                          });
-                                        }),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const BasicText(text: 'Fuel Grade', color: kColorDarkShade,),
-                                  Visibility(
-                                      visible: Platform.isIOS,
-                                      child: InfoElevatedBTN(
-                                        btnText: defaultFuelGradeSelectorLabel,
-                                        onPressed: () {
-                                          showFuelGradeActionSheet(context);
-
-                                          setState(() {
-
-                                            fuelTypeSelectorLabel = ((kFuelTypeList[kFuelTypeListIndex] as Center).child as Text).data!;
-                                            //print('$selectedRecordIndex');
-
-                                          });
-                                        },
-                                      )),
-                                  Visibility(
-                                      visible: Platform.isAndroid,
-                                      child: buildAndroidFuelGradeDropdown(
-                                          updateiOSValueAndUI: () {
-                                            setState(() {
-                                              selectedFuelGrade;
-                                            });
-                                          }))
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 20.0,
-                            ),
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const BasicText(text: 'Fuel Price', color: kColorDarkShade,),
-                                  Container(
-                                    width: 200.0,
-                                    height: 50.0,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: kBtnColorDefault,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    child: Container(
-                                      color: kColorLightAccent,
-                                      child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 20),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              buildMainDisplayText(
-                                                  enteredText: 'R '),
-                                              buildMainDisplayText(
-                                                  enteredText:
-                                                  fuelPrice.toString()),
-                                            ],
-                                          )),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const BasicText(text: 'Distance', color: kColorDarkShade,),
-                                  TextField(
-                                    keyboardType: TextInputType.number,
-                                    onChanged: (value) {
-                                      try {
-                                        distance = double.parse(value);
-                                      } catch(e){
-                                        distance = 0.00;
-                                      }
-                                      setState(() {
-                                        defaultFuelGradeSelectorLabel = selectedFuelGrade;
-                                        //defaultFuelGradeSelectorLabel = ((kPetrolList[kFuelGradeListIndex] as Center).child as Text).data ?? ((kDieselList[kFuelGradeListIndex] as Center).child as Text).data!;
-
-                                      });
-                                    },
-                                    decoration: const InputDecoration(
-                                      //labelText: distance.toString(),
-                                      hintText: 'KM',
-                                      border: OutlineInputBorder(),
-                                    ),
-                                    style: const TextStyle(
-                                      fontSize: 30.0,
-                                      color: Colors.black54,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 20.0,
-                            ),
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const BasicText(text: 'Consumption', color: kColorDarkShade,),
-                                  TextField(
-                                    keyboardType: TextInputType.number,
-                                    onChanged: (value) {
-                                      try{
-                                        consumption = double.parse(value);
-                                      } catch (e){
-                                        consumption = 0.00;
-                                      }
-                                    },
-                                    decoration: const InputDecoration(
-                                      hintText: 'L/100km',
-                                      border: OutlineInputBorder(),
-                                    ),
-                                    style: const TextStyle(
-                                      fontSize: 30.0,
-                                      color: Colors.black54,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: buildTotalButton(context),
-                            ),
-                          ],
-                        ),
-                      ],
-                    )),
-              )
-            ],
-          ),
+      //backgroundColor: kColorLightShade,
+      //backgroundColor: const Color(0xff252E42),
+      body: Container(
+        decoration: const BoxDecoration (
+          image: DecorationImage(image: AssetImage('assets/flatGeoBG.jpg'), fit: BoxFit.cover),
         ),
+        child: Stack(
+          children: [
+            Container(
+
+              decoration: BoxDecoration (
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(20.0),
+                    topRight: Radius.circular(20.0),
+                  ),
+                  color: const Color(0xff05172e).withOpacity(0.9)
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15.0, 30.0, 15.0, 15.0),
+
+              child: SafeArea(
+                child: Column(
+                  children: [
+                    const CircleAvatar(
+                      radius: 50.0,
+                      //backgroundColor: Colors.red,
+                      backgroundImage: AssetImage('assets/howfarLogo.png'),
+                    ),
+                    const SizedBox(height: 20.0),
+                    Expanded(
+                      child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        const BasicText(text: 'Location', color: kColorWhiteFancy,),
+                                        const SizedBox(height: 15.0,),
+                                        Visibility(
+                                          visible: Platform.isIOS,
+                                          child: DefaultElevatedBTN(
+                                            btnText: locationSelectorLabel,
+                                            onPressed: () {
+                                              showLocationActionSheet(context);
+                                              setState(() {
+                                                locationSelectorLabel = ((kLocationList[kLocationListIndex] as Center).child as Text).data!;
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                        Visibility(
+                                          visible: Platform.isAndroid,
+                                          child: buildAndroidLocationDropdown(
+                                              updateValueAndUI: () {
+                                                setState(() {
+                                                  selectedLocation;
+                                                });
+                                              }),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 20.0,
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        const BasicText(text: 'Fuel Type', color: kColorWhiteFancy,),
+                                        const SizedBox(height: 15.0,),
+                                        Visibility(
+                                            visible: Platform.isIOS,
+                                            child: DefaultElevatedBTN(
+                                                btnText: fuelTypeSelectorLabel,
+                                                onPressed: () {
+
+                                                  showFuelTypeActionSheet(context);
+                                                  setState(() {
+                                                    locationSelectorLabel = ((kLocationList[kLocationListIndex] as Center).child as Text).data!;
+                                                    fuelTypeSelectorLabel = ((kFuelTypeList[kFuelTypeListIndex] as Center).child as Text).data!;
+
+                                                  });
+                                                })),
+                                        Visibility(
+                                          visible: Platform.isAndroid,
+                                          child: buildAndroidFuelTypeDropdown(
+                                              updateValueAndUI: () {
+                                                setState(() {
+                                                  //selectedFuelType;
+                                                });
+                                              }),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        const BasicText(text: 'Fuel Grade', color: kColorWhiteFancy,),
+                                        const SizedBox(height: 15.0,),
+                                        Visibility(
+                                            visible: Platform.isIOS,
+                                            child: DefaultElevatedBTN(
+                                              btnText: defaultFuelGradeSelectorLabel,
+                                              onPressed: () {
+                                                showFuelGradeActionSheet(context);
+
+                                                setState(() {
+
+                                                  fuelTypeSelectorLabel = ((kFuelTypeList[kFuelTypeListIndex] as Center).child as Text).data!;
+                                                  //print('$selectedRecordIndex');
+
+                                                });
+                                              },
+                                            )),
+                                        Visibility(
+                                            visible: Platform.isAndroid,
+                                            child: buildAndroidFuelGradeDropdown(
+                                                updateiOSValueAndUI: () {
+                                                  setState(() {
+                                                    selectedFuelGrade;
+                                                  });
+                                                }))
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 20.0,
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        const BasicText(text: 'Fuel Price', color: kColorWhiteFancy,),
+                                        const SizedBox(height: 15.0,),
+                                        Container(
+                                          width: 200.0,
+                                          height: 50.0,
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: const Color(0xff3C4B68),
+                                              width: 2,
+                                            ),
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                          child: Container(
+                                            color: const Color(0xff20293B),
+                                            child: Padding(
+                                                padding: const EdgeInsets.symmetric(
+                                                    horizontal: 20),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    buildMainDisplayText(
+                                                        enteredText: 'R '),
+                                                    buildMainDisplayText(
+                                                        enteredText:
+                                                        fuelPrice.toString()),
+                                                  ],
+                                                )),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        const BasicText(text: 'Distance', color: kColorWhiteFancy,),
+                                        const SizedBox(height: 15.0,),
+                                        TextField(
+                                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                          onChanged: (value) {
+                                            try {
+                                              distance = double.parse(value);
+                                            } catch(e){
+                                              distance = 0.00;
+                                            }
+                                            setState(() {
+                                              defaultFuelGradeSelectorLabel = selectedFuelGrade;
+                                              //defaultFuelGradeSelectorLabel = ((kPetrolList[kFuelGradeListIndex] as Center).child as Text).data ?? ((kDieselList[kFuelGradeListIndex] as Center).child as Text).data!;
+
+                                            });
+                                          },
+                                          decoration: const InputDecoration(
+                                            //labelText: distance.toString(),
+                                            hintText: 'km',
+                                            border: OutlineInputBorder(),
+                                            filled: true,
+                                            fillColor: Color(0xff20293B),
+                                          ),
+                                          style: const TextStyle(
+                                            fontSize: 30.0,
+                                            color: kColorWhiteFancy,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 20.0,
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        const BasicText(text: 'Consumption', color: kColorWhiteFancy,),
+                                        const SizedBox(height: 15.0,),
+                                        TextField(
+                                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                          onChanged: (value) {
+                                            try{
+                                              consumption = double.parse(value);
+                                            } catch (e){
+                                              consumption = 0.00;
+                                            }
+                                          },
+                                          decoration: const InputDecoration(
+                                            hintText: 'l/100km',
+                                            border: OutlineInputBorder(),
+                                            filled: true,
+                                            fillColor: Color(0xff20293B),
+                                          ),
+                                          style: const TextStyle(
+                                            fontSize: 30.0,
+                                            color: kColorWhiteFancy,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: buildTotalButton(context),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ],
+        )
       ),
     );
   }
@@ -309,7 +343,6 @@ class _HomeViewState extends State<HomeView> {
 
           selectedRecordIndex == 999 ? selectedRecordIndex = 4: selectedRecordIndex =4;
           defaultFuelGradeSelectorLabel = selectedFuelGrade;
-
 
           if(selectedFuelType == 'petrol' && selectedFuelGrade == 'none') {
             selectedFuelGrade = '95 unleaded';
@@ -401,7 +434,7 @@ class _HomeViewState extends State<HomeView> {
                 setState(() {
                   fuelPrice = dieselValue;
 
-                  if (canCalculateCost == true) {
+                  if (canCalculateCost) {
                     totalCost = (distance / consumption) * fuelPrice;
                     totalCost = double.parse(totalCost!.toStringAsFixed(2));
                   } else {
@@ -474,7 +507,7 @@ class _HomeViewState extends State<HomeView> {
                 setState(() {
                   fuelPrice = petrolValue;
 
-                  if (canCalculateCost == true){
+                  if (canCalculateCost){
 
                     totalCost = (distance / consumption) * fuelPrice;
                     totalCost = double.parse(totalCost!.toStringAsFixed(2));
@@ -542,7 +575,7 @@ class _HomeViewState extends State<HomeView> {
                 setState(() {
                   fuelPrice = dieselValue;
 
-                  if (canCalculateCost == true){
+                  if (canCalculateCost){
 
                     totalCost = (distance / consumption) * fuelPrice;
                     totalCost = double.parse(totalCost!.toStringAsFixed(2));
