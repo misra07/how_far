@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:how_far/model/constants.dart';
-import 'package:how_far/model/theme.dart';
+//import 'package:how_far/model/theme.dart';
 
 class PrimaryElevatedBTN extends StatelessWidget {
 
@@ -16,7 +16,7 @@ class PrimaryElevatedBTN extends StatelessWidget {
         minimumSize: MaterialStateProperty.all(const Size(200.0, 50.0)),
         textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 20)),
         //backgroundColor: MaterialStatePropertyAll<Color>(Colors.cyan),
-        backgroundColor: MaterialStatePropertyAll<Color>(Color(0xffff6150)),
+        backgroundColor: const MaterialStatePropertyAll<Color>(Color(0xffff6150)),
       ),
       onPressed: onPressed,
       child: Text(btnText.toUpperCase()),

@@ -108,7 +108,7 @@ class _HomeViewState extends State<HomeView> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         const BasicText(text: 'Location', color: kColorWhiteFancy,),
-                                        const SizedBox(height: 15.0,),
+                                        const SizedBox(height: 10.0,),
                                         Visibility(
                                           visible: Platform.isIOS,
                                           child: DefaultElevatedBTN(
@@ -141,7 +141,7 @@ class _HomeViewState extends State<HomeView> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         const BasicText(text: 'Fuel Type', color: kColorWhiteFancy,),
-                                        const SizedBox(height: 15.0,),
+                                        const SizedBox(height: 10.0,),
                                         Visibility(
                                             visible: Platform.isIOS,
                                             child: DefaultElevatedBTN(
@@ -176,7 +176,7 @@ class _HomeViewState extends State<HomeView> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         const BasicText(text: 'Fuel Grade', color: kColorWhiteFancy,),
-                                        const SizedBox(height: 15.0,),
+                                        const SizedBox(height: 10.0,),
                                         Visibility(
                                             visible: Platform.isIOS,
                                             child: DefaultElevatedBTN(
@@ -211,7 +211,7 @@ class _HomeViewState extends State<HomeView> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         const BasicText(text: 'Fuel Price', color: kColorWhiteFancy,),
-                                        const SizedBox(height: 15.0,),
+                                        const SizedBox(height: 10.0,),
                                         Container(
                                           width: 200.0,
                                           height: 50.0,
@@ -252,31 +252,38 @@ class _HomeViewState extends State<HomeView> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         const BasicText(text: 'Distance', color: kColorWhiteFancy,),
-                                        const SizedBox(height: 15.0,),
-                                        TextField(
-                                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                                          onChanged: (value) {
-                                            try {
-                                              distance = double.parse(value);
-                                            } catch(e){
-                                              distance = 0.00;
-                                            }
-                                            setState(() {
-                                              defaultFuelGradeSelectorLabel = selectedFuelGrade;
-                                              //defaultFuelGradeSelectorLabel = ((kPetrolList[kFuelGradeListIndex] as Center).child as Text).data ?? ((kDieselList[kFuelGradeListIndex] as Center).child as Text).data!;
-
-                                            });
-                                          },
-                                          decoration: const InputDecoration(
-                                            //labelText: distance.toString(),
-                                            hintText: 'km',
-                                            border: OutlineInputBorder(),
-                                            filled: true,
-                                            fillColor: Color(0xff20293B),
+                                        const SizedBox(height: 10.0,),
+                                        Container(
+                                          height: 50.0,
+                                          decoration: BoxDecoration (
+                                            //border: Border.all(color: Color(0xff20293B), width: 3.0)
                                           ),
-                                          style: const TextStyle(
-                                            fontSize: 30.0,
-                                            color: kColorWhiteFancy,
+                                          child: TextField(
+                                            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                            onChanged: (value) {
+                                              try {
+                                                distance = double.parse(value);
+                                              } catch(e){
+                                                distance = 0.00;
+                                              }
+                                              setState(() {
+                                                defaultFuelGradeSelectorLabel = selectedFuelGrade;
+                                                //defaultFuelGradeSelectorLabel = ((kPetrolList[kFuelGradeListIndex] as Center).child as Text).data ?? ((kDieselList[kFuelGradeListIndex] as Center).child as Text).data!;
+
+                                              });
+                                            },
+                                            decoration: const InputDecoration(
+                                              //labelText: distance.toString(),
+                                              hintText: 'km',
+                                              border: OutlineInputBorder(),
+                                              filled: true,
+                                              fillColor: Color(0xff20293B),
+                                            ),
+                                            style: const TextStyle(
+                                              fontSize: 25.0,
+                                              color: kColorWhiteFancy,
+
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -290,25 +297,28 @@ class _HomeViewState extends State<HomeView> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         const BasicText(text: 'Consumption', color: kColorWhiteFancy,),
-                                        const SizedBox(height: 15.0,),
-                                        TextField(
-                                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                                          onChanged: (value) {
-                                            try{
-                                              consumption = double.parse(value);
-                                            } catch (e){
-                                              consumption = 0.00;
-                                            }
-                                          },
-                                          decoration: const InputDecoration(
-                                            hintText: 'l/100km',
-                                            border: OutlineInputBorder(),
-                                            filled: true,
-                                            fillColor: Color(0xff20293B),
-                                          ),
-                                          style: const TextStyle(
-                                            fontSize: 30.0,
-                                            color: kColorWhiteFancy,
+                                        const SizedBox(height: 10.0,),
+                                        Container(
+                                          height: 50.0,
+                                          child: TextField(
+                                            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                            onChanged: (value) {
+                                              try{
+                                                consumption = double.parse(value);
+                                              } catch (e){
+                                                consumption = 0.00;
+                                              }
+                                            },
+                                            decoration: const InputDecoration(
+                                              hintText: 'l/100km',
+                                              border: OutlineInputBorder(),
+                                              filled: true,
+                                              fillColor: Color(0xff20293B),
+                                            ),
+                                            style: const TextStyle(
+                                              fontSize: 25.0,
+                                              color: kColorWhiteFancy,
+                                            ),
                                           ),
                                         ),
                                       ],
