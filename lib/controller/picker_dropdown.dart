@@ -45,7 +45,7 @@ CupertinoPicker buildLocationCupertinoPicker() {
   return CupertinoPicker(
     scrollController: locationCupertinoScrollController,
     selectionOverlay: CupertinoPickerDefaultSelectionOverlay(
-      background: Color(0xffff6150).withOpacity(0.6),
+      background: const Color(0xffff6150).withOpacity(0.6),
     ),
     itemExtent: 50,
     onSelectedItemChanged: (selectedIndex){
@@ -89,7 +89,7 @@ CupertinoPicker buildFuelTypeCupertinoPicker() {
   return CupertinoPicker(
     scrollController: fuelTypeCupertinoScrollController,
     selectionOverlay: CupertinoPickerDefaultSelectionOverlay(
-      background: Color(0xffff6150).withOpacity(0.6),
+      background: const Color(0xffff6150).withOpacity(0.6),
     ),
     itemExtent: 50.0,
     onSelectedItemChanged: (selectedIndex){
@@ -150,7 +150,7 @@ CupertinoPicker buildPetrolCupertinoPicker() {
   return CupertinoPicker(
     scrollController: petrolCupertinoScrollController,
     selectionOverlay: CupertinoPickerDefaultSelectionOverlay(
-      background: Color(0xffff6150).withOpacity(0.6),
+      background: const Color(0xffff6150).withOpacity(0.6),
     ),
     itemExtent: 50.0,
     onSelectedItemChanged: (selectedIndex){
@@ -172,9 +172,9 @@ Widget buildAndroidLocationDropdown({required Function updateValueAndUI}) {
   return DropdownButton<String>(
     value: selectedLocation,
     style: const TextStyle(color: kColorWhiteFancy, fontSize: 20.0),
-    dropdownColor: Color(0xff990f00),
+    dropdownColor: const Color(0xffff6150),
     items: loopThroughLocationList(),
-    icon: Icon(
+    icon: const Icon(
       Icons.arrow_drop_down, // Arrow icon
       color: Color(0xffffcb00),      // Change arrow color
     ),
@@ -208,12 +208,12 @@ DropdownButton<String> buildAndroidFuelTypeDropdown({required Function updateVal
 
     value: selectedFuelType.isEmpty? 'petrol': selectedFuelType,
     items: loopThroughFuelTypeList(),
-    icon: Icon(
+    icon: const Icon(
       Icons.arrow_drop_down, // Arrow icon
       color: Color(0xffffcb00),      // Change arrow color
     ),
     style: const TextStyle(color: kColorWhiteFancy, fontSize: 20.0),
-    dropdownColor: Color(0xff990f00),
+    dropdownColor: const Color(0xffff6150),
     onChanged: (value){
       selectedFuelType = value!;
       updateValueAndUI();
@@ -247,12 +247,12 @@ DropdownButton<String> buildAndroidFuelGradeDropdown({required Function updateiO
   return DropdownButton<String>(
     value: selectedFuelType == 'petrol'? ((kPetrolList[fuelGradeIndex] as Center).child as Text).data: ((kDieselList[fuelGradeIndex] as Center).child as Text).data,
     items: selectedFuelType == 'petrol'? loopThroughPetrolList(): loopThroughDieselList(),
-    icon: Icon(
+    icon: const Icon(
       Icons.arrow_drop_down, // Arrow icon
       color: Color(0xffffcb00),      // Change arrow color
     ),
     style: const TextStyle(color: kColorWhiteFancy, fontSize: 20.0),
-    dropdownColor: Color(0xff990f00),
+    dropdownColor: const Color(0xffff6150),
     onChanged: (value){
       selectedFuelGrade = value!;
       if(selectedFuelType == 'petrol'){

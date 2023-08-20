@@ -255,13 +255,14 @@ class _HomeViewState extends State<HomeView> {
                                         const SizedBox(height: 10.0,),
                                         Container(
                                           height: 50.0,
-                                          decoration: BoxDecoration (
+                                          decoration: const BoxDecoration (
                                             //border: Border.all(color: Color(0xff20293B), width: 3.0)
                                           ),
                                           child: TextField(
                                             keyboardType: const TextInputType.numberWithOptions(decimal: true),
                                             onChanged: (value) {
                                               try {
+                                                value = value.replaceAll(',', '.');
                                                 distance = double.parse(value);
                                               } catch(e){
                                                 distance = 0.00;
@@ -304,6 +305,7 @@ class _HomeViewState extends State<HomeView> {
                                             keyboardType: const TextInputType.numberWithOptions(decimal: true),
                                             onChanged: (value) {
                                               try{
+                                                value = value.replaceAll(',', '.');
                                                 consumption = double.parse(value);
                                               } catch (e){
                                                 consumption = 0.00;
